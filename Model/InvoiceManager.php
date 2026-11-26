@@ -116,7 +116,7 @@ class InvoiceManager
             );
         } catch (ApiException $e) {
             $order->addCommentToStatusHistory(
-                (string) __('intents.fi could not create a payment: %1', $e->getMessage())
+                (string) __('Intents could not create a payment: %1', $e->getMessage())
             );
             $this->orderRepository->save($order);
             throw new LocalizedException(__('We could not start your payment. Please try again, or email %1.', Config::SUPPORT_EMAIL));
@@ -124,7 +124,7 @@ class InvoiceManager
             // Every reference tried came back as another order's invoice: never redirect through one.
             $this->logger->error($e->getMessage());
             $order->addCommentToStatusHistory(
-                (string) __('intents.fi returned a payment made for a different order, so it was not used. Check that no other store shares this intents.fi key with the same base URL.')
+                (string) __('Intents returned a payment made for a different order, so it was not used. Check that no other store shares this Intents key with the same base URL.')
             );
             $this->orderRepository->save($order);
             throw new LocalizedException(__('We could not start your payment. Please try again, or email %1.', Config::SUPPORT_EMAIL));
@@ -152,7 +152,7 @@ class InvoiceManager
         }
         $order->addCommentToStatusHistory(
             (string) __(
-                'intents.fi payment %1 created for %2 USD (%3 mode, reference %4). Waiting for the customer to pay.',
+                'Intents payment %1 created for %2 USD (%3 mode, reference %4). Waiting for the customer to pay.',
                 $invoiceId,
                 $amount,
                 $mode,

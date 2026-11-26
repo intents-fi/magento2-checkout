@@ -33,7 +33,7 @@ networks to the best available rate, so checkout keeps working if one network is
 
 ### How it works
 
-1. Install and click **Connect intents.fi** in Stores → Configuration → Sales → Payment Methods →
+1. Install and click **Connect to Intents** in Stores → Configuration → Sales → Payment Methods →
    Intents Checkout (or paste API keys). You come back connected in test mode, with payment
    notifications set up.
 2. Choose your settlement asset and wallet in the Intents dashboard.
@@ -59,8 +59,8 @@ payment page, and the funds go straight to your wallet: Intents never holds them
 ### Requirements
 
 Requires an Intents account (free to create at https://intents.fi/signup). Magento Open Source
-2.4.7 and 2.4.8 (tested on PHP 8.2 and 8.3) and 2.4.9 (tested on PHP 8.3), with the standard
-Luma-based checkout; PHP 8.2 or 8.3. The store's base and display currency must be US dollars, and
+2.4.7 and 2.4.8 (tested on PHP 8.2 and 8.3) and 2.4.9 (tested on PHP 8.3, 8.4 and 8.5), with the
+standard Luma-based checkout; PHP 8.2 to 8.5. The store's base and display currency must be US dollars, and
 the store must be served over HTTPS.
 
 ### Pricing
@@ -73,7 +73,7 @@ plugin is free.
 This extension connects to the Intents Checkout service. It calls `api.intents.fi` to create
 invoices and read their status when a customer checks out and when a webhook arrives, and sends the
 customer to `pay.intents.fi` to pay. Data sent: order id, amount, currency, return URLs and the
-customer's email (for their receipt). When you press **Connect intents.fi** or **Go live**, your
+customer's email (for their receipt). When you press **Connect to Intents** or **Go live**, your
 browser goes to `dashboard.intents.fi` with your store address; the extension then exchanges a
 one-time code for your keys, registers your store's webhook address, and revokes the keys on
 **Disconnect**. Terms: https://intents.fi/terms · Privacy: https://intents.fi/privacy.
@@ -124,11 +124,18 @@ Email support@intents.fi (support is by email only), or read https://intents.fi/
 
 ## Changelog
 
+### 1.0.1
+
+* PHP 8.4 and 8.5 support, tested on Magento Open Source 2.4.9.
+* The package description now names Magento Open Source only (Adobe Commerce is not tested yet).
+* The settings, order comments and messages say Intents instead of intents.fi; the button is now
+  **Connect to Intents**. Nothing to reconfigure.
+
 ### 1.0.0
 
 * First release.
 
-- Connect intents.fi: connect the store in a few clicks with no keys to copy; Go live and
+- Connect: connect the store in a few clicks with no keys to copy; Go live and
   Disconnect from the same settings page. Manual key entry still works.
 - "Pay with crypto" at checkout, with the order total first.
 - Orders are invoiced only by a signed confirmation that the funds have been delivered.
@@ -140,15 +147,17 @@ Email support@intents.fi (support is by email only), or read https://intents.fi/
 
 ## Tested versions
 
-Run on 2026-11-26 in Docker (OpenSearch 2.19). Every row: install, `setup:upgrade`,
-`setup:di:compile`, the test-mode checks below, and removal.
+Run on 2026-11-26 in Docker. Every row: install, `setup:upgrade`, `setup:di:compile`, the
+test-mode checks below, and removal. The 2.4.9 rows on PHP 8.4 and 8.5 were run on 1.0.1; the
+others on 1.0.0, whose code differs only in its screen text and version number.
 
-| Magento Open Source | PHP | Install | Mode | Database |
-|---|---|---|---|---|
-| 2.4.7-p10 | 8.2, 8.3 | `composer require` from the mirror repository | production (`setup:static-content:deploy`) | MariaDB 10.6 |
-| 2.4.8-p5 | 8.2, 8.3 | `composer require` from the mirror repository | production | MariaDB 11.4 |
-| 2.4.9 | 8.3 | zip in `app/code` | developer | MariaDB 11.4 |
-| 2.4.7-p9 | 8.3 | zip in `app/code` | developer | MariaDB 10.6 |
+| Magento Open Source | PHP | Install | Mode | Database | Search |
+|---|---|---|---|---|---|
+| 2.4.9 | 8.5.13, 8.4.28 | zip in `app/code` (1.0.1) | developer | MariaDB 12.3 | OpenSearch 3.10.1 |
+| 2.4.7-p10 | 8.2, 8.3 | `composer require` from the mirror repository | production (`setup:static-content:deploy`) | MariaDB 10.6 | OpenSearch 2.19 |
+| 2.4.8-p5 | 8.2, 8.3 | `composer require` from the mirror repository | production | MariaDB 11.4 | OpenSearch 2.19 |
+| 2.4.9 | 8.3 | zip in `app/code` | developer | MariaDB 11.4 | OpenSearch 2.19 |
+| 2.4.7-p9 | 8.3 | zip in `app/code` | developer | MariaDB 10.6 | OpenSearch 2.19 |
 
 Checks on each: Connect, Go live and Disconnect through the admin (against a mock of the Connect
 endpoints); Test connection; a test-mode order against api.intents.fi paid by a signed webhook
@@ -156,8 +165,11 @@ endpoints); Test connection; a test-mode order against api.intents.fi paid by a 
 creates no second invoice; a forged signature gets 401; `module:disable` + `setup:upgrade` (and,
 on 2.4.8-p5, `module:uninstall --remove-data`) leave the store working.
 
-Not run: Adobe Commerce (on-premises or cloud), PHP 8.4. `composer.json` requires PHP 8.2 or 8.3
-and `magento/framework` ^103.0.7 (2.4.7 and later).
+The pure-logic PHPUnit suite (`bin/run-phpunit.sh`, 104 tests) also passes on PHP 8.4 and 8.5.
+
+Not run: Adobe Commerce (on-premises or cloud); PHP 8.4 and 8.5 on 2.4.7 or 2.4.8. `composer.json`
+requires PHP 8.2, 8.3, 8.4 or 8.5 (`~8.2.0||~8.3.0||~8.4.0||~8.5.0`) and `magento/framework`
+^103.0.7 (2.4.7 and later).
 
 ## Source code
 

@@ -171,7 +171,7 @@ class MagentoOrderPort implements OrderPortInterface
             case OrderAction::ACTION_IGNORE:
             default:
                 $order->addCommentToStatusHistory(
-                    (string) __('intents.fi sent %1 after a later update; no change made.', $eventType)
+                    (string) __('Intents sent %1 after a later update; no change made.', $eventType)
                 );
                 break;
         }
@@ -194,7 +194,7 @@ class MagentoOrderPort implements OrderPortInterface
         $this->recordPaymentDetails($payment, $invoice);
 
         if (!$order->canInvoice()) {
-            $note = (string) __('intents.fi confirmed payment %1, but Magento cannot invoice this order in its current state. Please check it.', $invoiceId);
+            $note = (string) __('Intents confirmed payment %1, but Magento cannot invoice this order in its current state. Please check it.', $invoiceId);
             $order->addCommentToStatusHistory($note);
             $this->orderRepository->save($order);
             $this->notify($order, $note, true);

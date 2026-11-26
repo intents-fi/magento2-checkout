@@ -25,7 +25,7 @@ use Magento\Store\Model\StoreManagerInterface;
 class Config
 {
     public const METHOD_CODE = 'intentsfi_checkout';
-    public const VERSION = '1.0.0';
+    public const VERSION = '1.0.1';
     public const SUPPORT_EMAIL = 'support@intents.fi';
 
     private const PREFIX = 'payment/' . self::METHOD_CODE . '/';

@@ -44,8 +44,8 @@ class KeyMode
             return null;
         }
         if (str_starts_with($key, 'pk_')) {
-            return 'This is a publishable key (pk_…). Paste the secret key (ik_test_… or ik_live_…) from the intents.fi dashboard.';
+            return 'This is a publishable key (pk_…). Paste the secret key (ik_test_… or ik_live_…) from your Intents dashboard.';
         }
-        return 'This does not look like an intents.fi secret key. It should start with ik_test_ or ik_live_.';
+        return 'This does not look like an Intents secret key. It should start with ik_test_ or ik_live_.';
     }
 }

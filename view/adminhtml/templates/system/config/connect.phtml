@@ -7,9 +7,9 @@ $connection = $block->getConnection();
 <div id="intentsfi-checkout-connect">
 <?php if ($connection === null): ?>
     <a class="action-primary" href="<?= $escaper->escapeUrl($block->getStartUrl('test')) ?>">
-        <span><?= $escaper->escapeHtml(__('Connect intents.fi')) ?></span>
+        <span><?= $escaper->escapeHtml(__('Connect to Intents')) ?></span>
     </a>
-    <p class="note"><span><?= $escaper->escapeHtml(__('Sign in or sign up on intents.fi, approve, and come back here connected in test mode, with your key and payment notifications set up. No keys to copy. Test payments never move real money.')) ?></span></p>
+    <p class="note"><span><?= $escaper->escapeHtml(__('Sign in or sign up on Intents, approve, and come back here connected in test mode, with your key and payment notifications set up. No keys to copy. Test payments never move real money.')) ?></span></p>
     <p class="note"><span><?= $escaper->escapeHtml(__('Prefer to paste keys? Use Enter keys manually below.')) ?></span></p>
     <?php if ($block->hasKey()): ?>
         <p class="note"><span><?= $escaper->escapeHtml(__('A key entered manually is saved for this scope. Connecting replaces it.')) ?></span></p>
@@ -24,7 +24,7 @@ $connection = $block->getConnection();
     </p>
     <p class="note"><span>
         <?= $escaper->escapeHtml(__('Store: %1', $connection['site'] !== '' ? $connection['site'] : $block->getSiteUrl())) ?>
-        · <?= $escaper->escapeHtml($connection['webhook'] ? __('Payment notifications: working') : __('Payment notifications: not set up. Press Connect intents.fi again once the store answers on https://.')) ?>
+        · <?= $escaper->escapeHtml($connection['webhook'] ? __('Payment notifications: working') : __('Payment notifications: not set up. Press Connect to Intents again once the store answers on https://.')) ?>
     </span></p>
     <p>
         <?php if ($connection['mode'] !== 'live'): ?>
@@ -37,7 +37,7 @@ $connection = $block->getConnection();
         </button>
     </p>
     <?php if ($connection['mode'] !== 'live'): ?>
-        <p class="note"><span><?= $escaper->escapeHtml(__('Go live gets your live key once the go-live checklist on your intents.fi dashboard is done: a verified email and a payout wallet.')) ?></span></p>
+        <p class="note"><span><?= $escaper->escapeHtml(__('Go live gets your live key once the go-live checklist on your Intents dashboard is done: a verified email and a payout wallet.')) ?></span></p>
     <?php endif; ?>
     <?php
     $url = $escaper->escapeJs($block->getDisconnectUrl());

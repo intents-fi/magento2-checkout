@@ -1,16 +1,16 @@
-# Intents Checkout for Magento Open Source and Adobe Commerce
+# Intents Checkout for Magento Open Source
 
 Crypto checkout for Magento 2: the customer pays with whatever token they hold, and you receive
-one stablecoin at your own address. Non-custodial: intents.fi never holds your funds.
+one stablecoin at your own address. Non-custodial: Intents never holds your funds.
 
-The module is a thin offsite payment method over the public intents.fi API. It creates an
+The module is a thin offsite payment method over the public Intents Checkout API. It creates an
 invoice for the order, sends the customer to the hosted payment page at pay.intents.fi, and
 invoices the order only when a signed `invoice.paid` webhook says the funds have been delivered.
 
 - Module: `IntentsFi_Checkout` · Composer package: `intentsfi/module-checkout`
 - Tested on Magento Open Source **2.4.7-p10 and 2.4.8-p5 on PHP 8.2 and 8.3** (Composer, production
-  mode), and 2.4.9 on PHP 8.3; see `marketplace/listing.md`. Requires PHP 8.2 or 8.3 and
-  Magento 2.4.7 or later.
+  mode), and 2.4.9 on PHP 8.3, 8.4 and 8.5; see `marketplace/listing.md`. Requires PHP 8.2 to 8.5
+  and Magento 2.4.7 or later. Not tested on Adobe Commerce yet.
 - Luma-based checkout (the standard Knockout checkout). Hyvä Checkout is not supported yet.
 - Support: **support@intents.fi** (email only)
 
@@ -50,7 +50,7 @@ bin/magento module:uninstall IntentsFi_Checkout --remove-data
 `--remove-data` runs `Setup/Uninstall.php`: it drops `intentsfi_checkout_webhook_event` and deletes
 `payment/intentsfi_checkout/*` (the encrypted key and webhook secret included) at every scope.
 Orders keep their payment information and comments. Without `--remove-data`, the data stays.
-Disconnect first if the store is connected, so the keys are revoked on intents.fi too.
+Disconnect first if the store is connected, so the keys are revoked by Intents too.
 
 **`app/code` install:** `bin/magento module:disable IntentsFi_Checkout`, delete
 `app/code/IntentsFi/Checkout`, then `bin/magento setup:upgrade`. Magento leaves a removed
@@ -59,7 +59,7 @@ Disconnect first if the store is connected, so the keys are revoked on intents.f
 ## External services
 
 This module is a connector to Intents (intents.fi), a third-party payment service. It cannot take
-payments without an intents.fi account. It talks to:
+payments without an Intents account. It talks to:
 
 - **api.intents.fi**, from the store's server: when an order is placed with the method (the order
   total and currency, a reference made from the increment ID and a short store key, a description,
@@ -68,17 +68,17 @@ payments without an intents.fi account. It talks to:
   and for Connect (the one-time code, the PKCE verifier and the store URL, to receive the keys;
   registering the store's webhook URL; revoking on Disconnect). Every other request is
   authenticated with the store's secret key.
-- **dashboard.intents.fi**, in the admin's browser, when **Connect intents.fi** or **Go live** is
+- **dashboard.intents.fi**, in the admin's browser, when **Connect to Intents** or **Go live** is
   pressed: the store URL, the address to return to, the mode and two random values.
 - **pay.intents.fi**, in the customer's browser: the hosted payment page.
 
-intents.fi sends signed payment notifications to `https://<your store>/intentsfi/webhook`; the
+Intents sends signed payment notifications to `https://<your store>/intentsfi/webhook`; the
 module refuses any it cannot verify. Terms: https://intents.fi/terms · Privacy:
 https://intents.fi/privacy · Docs: https://intents.fi/docs/checkout/magento
 
 ## Licence
 
-MIT (`LICENSE`). Pricing: 0.4% per payment, no monthly fee, charged by intents.fi; the module
+MIT (`LICENSE`). Pricing: 0.4% per payment, no monthly fee, charged by Intents; the module
 itself is free.
 
 ## Configure
@@ -88,7 +88,7 @@ per website.
 
 ### Connect (no keys to copy)
 
-1. Press **Connect intents.fi**. You go to dashboard.intents.fi, sign in or sign up, and approve.
+1. Press **Connect to Intents**. You go to dashboard.intents.fi, sign in or sign up, and approve.
 2. You come back to the same settings page **connected in test mode**: the module has saved a test
    secret key, registered this store's webhook URL with it and saved the webhook secret. Nothing to
    copy or paste.
@@ -98,7 +98,7 @@ per website.
 4. **Go live** fetches your live key once the go-live checklist on the dashboard is done (a
    verified email and a payout wallet). Until then it says what is missing and the store stays in
    test mode. On success the live key replaces the test one, and the test connection is revoked.
-5. **Disconnect** revokes this scope's keys and webhook on intents.fi, then clears them here.
+5. **Disconnect** revokes this scope's keys and webhook with Intents, then clears them here.
 
 How it works: the module makes a `state` and a PKCE verifier (kept server-side in Magento's cache
 for this admin user, never in a URL or cookie) and sends you to
@@ -108,14 +108,14 @@ store's own origin and Magento's admin often lives elsewhere. That route only fo
 `state` to the admin callback URL saved when you pressed Connect; the admin callback checks the
 state belongs to the same admin user, exchanges the code with the verifier
 (`POST /v0/connect/token`), registers the webhook (`POST /v0/webhooks`) and saves both secrets
-encrypted. The protocol code is the one every intents.fi store plugin shares
+encrypted. The protocol code is the one every Intents store plugin shares
 (`plugins/_shared/connect/class-connect-protocol.php`), copied into `lib/connect/` by
 `bin/build-dist.sh`. Connect needs the store on `https://` (plain http only for `localhost`,
 `127.0.0.1` and `.test` hosts, against a development API).
 
 ### Enter keys manually
 
-1. In the [intents.fi dashboard](https://dashboard.intents.fi), check your settlement asset and
+1. In your [Intents dashboard](https://dashboard.intents.fi), check your settlement asset and
    address, and copy your **test** secret key (`ik_test_…`).
 2. Under **Enter keys manually**, paste it into **API key**. The **Mode** row shows *Test* or
    *Live*, read from the key's prefix. A publishable `pk_…` key is refused on save.
@@ -157,13 +157,13 @@ The API and dashboard origins can only be changed in `app/etc/env.php`, never in
    `reference = <order increment id>-<store key>` and redirects to its hosted `url`. The reference
    is the API's idempotency key, so a reload or a second tab lands on the same invoice. The store
    key is eight hex characters of a hash of the store's base URL (scheme and trailing slash
-   ignored): two stores on one intents.fi merchant can both have order `000000001`, and without
+   ignored): two stores on one Intents merchant can both have order `000000001`, and without
    it the second would be handed the first one's invoice. An invoice whose metadata names another
    order (`magento_increment_id`, `magento_order_check`) is never reused, redirected to or
    canceled; the next reference is tried instead.
 4. The customer pays on the hosted page. Coming back to `/intentsfi/checkout/success` never marks
    the order paid.
-5. intents.fi delivers signed `invoice.*` webhooks to `/intentsfi/webhook`:
+5. Intents delivers signed `invoice.*` webhooks to `/intentsfi/webhook`:
 
 | Event | What the order does |
 |---|---|
@@ -207,7 +207,7 @@ one, so its own `invoice.canceled` webhook cannot cancel the order. Only the cur
 the order: a payment on a superseded invoice puts the order on hold with a note naming both
 amounts.
 
-Canceling an order in Magento also closes its intents.fi invoice, so it cannot be paid later.
+Canceling an order in Magento also closes its Intents invoice, so it cannot be paid later.
 
 ## Develop
 
@@ -267,6 +267,17 @@ PHP runs on the host and needs Magento's extensions (bcmath, curl, gd, intl, mbs
 soap, sodium, xsl, zip). Packages come from the Mage-OS mirror, which needs no repo.magento.com
 keys. Admin is `admin` / `Admin12345!` at `/admin`.
 
+For 2.4.9, use the services Adobe lists for it and pick the PHP version with `with-php.sh` (it puts
+`php8.5` or `php8.4` first on `PATH` for every script and Composer):
+
+```bash
+MARIADB_IMAGE=mariadb:12.3 OPENSEARCH_IMAGE=opensearchproject/opensearch:3.10.1 \
+  docker compose -f dev/magento/docker-compose.yml up -d
+MAGENTO_VERSION=2.4.9 dev/magento/with-php.sh 8.5 dev/magento/install.sh
+(cd dev/magento/src && ../with-php.sh 8.5 php -S 127.0.0.1:8080 -t pub phpserver/router.php) &
+dev/magento/with-php.sh 8.5 bin/run-phpunit.sh
+```
+
 ```bash
 INTENTSFI_TEST_KEY=ik_test_… dev/magento/smoke.sh   # a real test-mode order against api.intents.fi
 dev/magento/connect-smoke.sh                        # Connect, Go live, Disconnect through the admin, against connect-mock.php
@@ -274,7 +285,8 @@ dev/magento/connect-smoke.sh                        # Connect, Go live, Disconne
 
 `setup:install` needs Docker for MariaDB and OpenSearch. If Docker Hub rate-limits the pulls,
 pull `mirror.gcr.io/library/mariadb:11.4` and `mirror.gcr.io/opensearchproject/opensearch:2.19.1`
-and `docker tag` them to the names in `docker-compose.yml`.
+(for 2.4.9: `mariadb:12.3` and `opensearchproject/opensearch:3.10.1`) and `docker tag` them to the
+names in `docker-compose.yml`.
 
 ### Building what ships
 

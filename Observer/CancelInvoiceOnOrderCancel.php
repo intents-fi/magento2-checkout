@@ -44,10 +44,10 @@ class CancelInvoiceOnOrderCancel implements ObserverInterface
 
         try {
             $this->clientFactory->forStore((int) $order->getStoreId())->cancelInvoice($invoiceId);
-            $order->addCommentToStatusHistory((string) __('The intents.fi payment %1 was closed, so it can no longer be paid.', $invoiceId));
+            $order->addCommentToStatusHistory((string) __('The Intents payment %1 was closed, so it can no longer be paid.', $invoiceId));
         } catch (ApiException $e) {
             $order->addCommentToStatusHistory((string) __(
-                'The intents.fi payment %1 could not be closed: %2. If the customer pays it, this order is flagged for you to review.',
+                'The Intents payment %1 could not be closed: %2. If the customer pays it, this order is flagged for you to review.',
                 $invoiceId,
                 $e->getMessage()
             ));

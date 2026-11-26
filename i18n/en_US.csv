@@ -1,57 +1,57 @@
 Save the key first.,Save the key first.
-intents.fi said: %1 (%2),intents.fi said: %1 (%2)
+Intents said: %1 (%2),Intents said: %1 (%2)
 Connected to %1,Connected to %1
 %1 mode,%1 mode
 status %1,status %1
 settles to %1,settles to %1
-no settlement wallet set yet: add one in the intents.fi dashboard,no settlement wallet set yet: add one in the intents.fi dashboard
+no settlement wallet set yet: add one in your Intents dashboard,no settlement wallet set yet: add one in your Intents dashboard
 Your payment may already be on its way. We will confirm your order by email as soon as it arrives.,Your payment may already be on its way. We will confirm your order by email as soon as it arrives.
 The customer left the payment page without paying. Order canceled and cart restored.,The customer left the payment page without paying. Order canceled and cart restored.
 Your payment was not completed. Your cart is ready when you are.,Your payment was not completed. Your cart is ready when you are.
 "We could not start your payment. Please try again, or email %1.","We could not start your payment. Please try again, or email %1."
 "The payment page could not be opened, so the order was canceled and the customer's cart restored.","The payment page could not be opened, so the order was canceled and the customer's cart restored."
-intents.fi invoices are priced in USD only.,intents.fi invoices are priced in USD only.
+Intents invoices are priced in USD only.,Intents invoices are priced in USD only.
 This order is not paid with Intents Checkout.,This order is not paid with Intents Checkout.
 This order is no longer waiting for payment.,This order is no longer waiting for payment.
 This payment method is not available for this order's currency.,This payment method is not available for this order's currency.
 This payment method is not set up yet. Please choose another one.,This payment method is not set up yet. Please choose another one.
-intents.fi could not create a payment: %1,intents.fi could not create a payment: %1
-"intents.fi payment %1 created for %2 USD (%3 mode, reference %4). Waiting for the customer to pay.","intents.fi payment %1 created for %2 USD (%3 mode, reference %4). Waiting for the customer to pay."
+Intents could not create a payment: %1,Intents could not create a payment: %1
+"Intents payment %1 created for %2 USD (%3 mode, reference %4). Waiting for the customer to pay.","Intents payment %1 created for %2 USD (%3 mode, reference %4). Waiting for the customer to pay."
 Order #%1 at %2,Order #%1 at %2
 it was created with a %1 key and the saved key is now %2,it was created with a %1 key and the saved key is now %2
 "The earlier payment %1 for this order was closed, so only the new one can be paid.","The earlier payment %1 for this order was closed, so only the new one can be paid."
 "The earlier payment %1 for this order could not be closed: %2. If the customer pays it, this order is put on hold for you to check rather than marked paid.","The earlier payment %1 for this order could not be closed: %2. If the customer pays it, this order is put on hold for you to check rather than marked paid."
-intents.fi sent %1 after a later update; no change made.,intents.fi sent %1 after a later update; no change made.
-"intents.fi confirmed payment %1, but Magento cannot invoice this order in its current state. Please check it.","intents.fi confirmed payment %1, but Magento cannot invoice this order in its current state. Please check it."
+Intents sent %1 after a later update; no change made.,Intents sent %1 after a later update; no change made.
+"Intents confirmed payment %1, but Magento cannot invoice this order in its current state. Please check it.","Intents confirmed payment %1, but Magento cannot invoice this order in its current state. Please check it."
 Intents Checkout: order #%1 needs a look,Intents Checkout: order #%1 needs a look
-Payment confirmed by intents.fi (%1). The funds have been delivered to your settlement wallet.,Payment confirmed by intents.fi (%1). The funds have been delivered to your settlement wallet.
-"Settled: %1 to your wallet, after the intents.fi fee.","Settled: %1 to your wallet, after the intents.fi fee."
-The customer sent more than the order total; the extra is shown in your intents.fi dashboard.,The customer sent more than the order total; the extra is shown in your intents.fi dashboard.
+Payment confirmed by Intents (%1). The funds have been delivered to your settlement wallet.,Payment confirmed by Intents (%1). The funds have been delivered to your settlement wallet.
+"Settled: %1 to your wallet, after the Intents fee.","Settled: %1 to your wallet, after the Intents fee."
+The customer sent more than the order total; the extra is shown in your Intents dashboard.,The customer sent more than the order total; the extra is shown in your Intents dashboard.
 The payment arrived after the payment window closed.,The payment arrived after the payment window closed.
 The customer paid part of payment %1. The order is on hold until the rest arrives; it moves to Processing on its own when it does.,The customer paid part of payment %1. The order is on hold until the rest arrives; it moves to Processing on its own when it does.
 Still owed: %1.,Still owed: %1.
 "The customer paid an earlier payment for this order (%1), not the current one. The order is on hold: check the amount before fulfilling. %2 was paid; this order is for %3.","The customer paid an earlier payment for this order (%1), not the current one. The order is on hold: check the amount before fulfilling. %2 was paid; this order is for %3."
 an unknown amount,an unknown amount
-"intents.fi confirmed payment %1 for %2, but this order is for %3. The order is on hold: check it before fulfilling.","intents.fi confirmed payment %1 for %2, but this order is for %3. The order is on hold: check it before fulfilling."
-intents.fi confirmed payment %1 after this order was canceled. The funds are in your settlement wallet. Decide whether to fulfil it as a new order or refund the customer.,intents.fi confirmed payment %1 after this order was canceled. The funds are in your settlement wallet. Decide whether to fulfil it as a new order or refund the customer.
-intents.fi confirmed payment %1 while this order is on hold. It was left on hold: release and invoice it yourself once you have checked it.,intents.fi confirmed payment %1 while this order is on hold. It was left on hold: release and invoice it yourself once you have checked it.
-The customer also paid an earlier payment for this order (%1). Check your intents.fi dashboard and refund the duplicate.,The customer also paid an earlier payment for this order (%1). Check your intents.fi dashboard and refund the duplicate.
-intents.fi flagged payment %1 for review. Open it in your intents.fi dashboard to see why.,intents.fi flagged payment %1 for review. Open it in your intents.fi dashboard to see why.
-The intents.fi payment window closed without a payment. Order canceled.,The intents.fi payment window closed without a payment. Order canceled.
-The intents.fi payment was canceled. Order canceled.,The intents.fi payment was canceled. Order canceled.
+"Intents confirmed payment %1 for %2, but this order is for %3. The order is on hold: check it before fulfilling.","Intents confirmed payment %1 for %2, but this order is for %3. The order is on hold: check it before fulfilling."
+Intents confirmed payment %1 after this order was canceled. The funds are in your settlement wallet. Decide whether to fulfil it as a new order or refund the customer.,Intents confirmed payment %1 after this order was canceled. The funds are in your settlement wallet. Decide whether to fulfil it as a new order or refund the customer.
+Intents confirmed payment %1 while this order is on hold. It was left on hold: release and invoice it yourself once you have checked it.,Intents confirmed payment %1 while this order is on hold. It was left on hold: release and invoice it yourself once you have checked it.
+The customer also paid an earlier payment for this order (%1). Check your Intents dashboard and refund the duplicate.,The customer also paid an earlier payment for this order (%1). Check your Intents dashboard and refund the duplicate.
+Intents flagged payment %1 for review. Open it in your Intents dashboard to see why.,Intents flagged payment %1 for review. Open it in your Intents dashboard to see why.
+The Intents payment window closed without a payment. Order canceled.,The Intents payment window closed without a payment. Order canceled.
+The Intents payment was canceled. Order canceled.,The Intents payment was canceled. Order canceled.
 The customer has sent payment %1; waiting for it to be confirmed. Do not ship yet.,The customer has sent payment %1; waiting for it to be confirmed. Do not ship yet.
-"intents.fi sent %1 for payment %2; the order is on hold for review, so it was not canceled.","intents.fi sent %1 for payment %2; the order is on hold for review, so it was not canceled."
-intents.fi sent %1 for an earlier payment of this order (%2). It no longer drives this order; no change made.,intents.fi sent %1 for an earlier payment of this order (%2). It no longer drives this order; no change made.
+"Intents sent %1 for payment %2; the order is on hold for review, so it was not canceled.","Intents sent %1 for payment %2; the order is on hold for review, so it was not canceled."
+Intents sent %1 for an earlier payment of this order (%2). It no longer drives this order; no change made.,Intents sent %1 for an earlier payment of this order (%2). It no longer drives this order; no change made.
 "USD. Invoices are priced in USD, so this store can use the payment method.","USD. Invoices are priced in USD, so this store can use the payment method."
 %1: %2,%1: %2
-"Add this URL as a webhook endpoint for the same key in the intents.fi dashboard, subscribed to the invoice events, and paste the secret it shows into Webhook secret.","Add this URL as a webhook endpoint for the same key in the intents.fi dashboard, subscribed to the invoice events, and paste the secret it shows into Webhook secret."
+"Add this URL as a webhook endpoint for the same key in your Intents dashboard, subscribed to the invoice events, and paste the secret it shows into Webhook secret.","Add this URL as a webhook endpoint for the same key in your Intents dashboard, subscribed to the invoice events, and paste the secret it shows into Webhook secret."
 This store is not served over HTTPS. Live webhooks are only delivered to https:// URLs.,This store is not served over HTTPS. Live webhooks are only delivered to https:// URLs.
 Test,Test
 payments are simulated end to end and never move real funds.,payments are simulated end to end and never move real funds.
 Live,Live
 "real payments, settled to your wallet.","real payments, settled to your wallet."
-"The intents.fi payment %1 was closed, so it can no longer be paid.","The intents.fi payment %1 was closed, so it can no longer be paid."
-"The intents.fi payment %1 could not be closed: %2. If the customer pays it, this order is flagged for you to review.","The intents.fi payment %1 could not be closed: %2. If the customer pays it, this order is flagged for you to review."
+"The Intents payment %1 was closed, so it can no longer be paid.","The Intents payment %1 was closed, so it can no longer be paid."
+"The Intents payment %1 could not be closed: %2. If the customer pays it, this order is flagged for you to review.","The Intents payment %1 could not be closed: %2. If the customer pays it, this order is flagged for you to review."
 Test connection,Test connection
 "Checks the saved key and shows the merchant, mode and settlement wallet it belongs to. Save your changes first.","Checks the saved key and shows the merchant, mode and settlement wallet it belongs to. Save your changes first."
 Checking…,Checking…
@@ -74,24 +74,24 @@ Payment from applicable countries,Payment from applicable countries
 Payment from specific countries,Payment from specific countries
 Sort order,Sort order
 What the customer sees at checkout.,What the customer sees at checkout.
-Press Connect intents.fi to try again.,Press Connect intents.fi to try again.
+Press Connect to Intents again.,Press Connect to Intents again.
 Connected. Your keys and payment notifications are set up.,Connected. Your keys and payment notifications are set up.
-"Connected, but payment notifications could not be set up, so paid orders will not update by themselves. intents.fi only sends them to an https:// address your store answers on. Press Connect intents.fi again once that is fixed.","Connected, but payment notifications could not be set up, so paid orders will not update by themselves. intents.fi only sends them to an https:// address your store answers on. Press Connect intents.fi again once that is fixed."
+"Connected, but payment notifications could not be set up, so paid orders will not update by themselves. Intents only sends them to an https:// address your store answers on. Press Connect to Intents again once that is fixed.","Connected, but payment notifications could not be set up, so paid orders will not update by themselves. Intents only sends them to an https:// address your store answers on. Press Connect to Intents again once that is fixed."
 Disconnected. The keys this store used have been revoked.,Disconnected. The keys this store used have been revoked.
 "This scope is not connected through Connect, so there was nothing to disconnect.","This scope is not connected through Connect, so there was nothing to disconnect."
 Connection cancelled. Nothing was changed.,Connection cancelled. Nothing was changed.
-"Live payments are not open for your account yet. Finish the go-live checklist on your intents.fi dashboard (a verified email and a payout wallet), then press Go live again.","Live payments are not open for your account yet. Finish the go-live checklist on your intents.fi dashboard (a verified email and a payout wallet), then press Go live again."
+"Live payments are not open for your account yet. Finish the go-live checklist on your Intents dashboard (a verified email and a payout wallet), then press Go live again.","Live payments are not open for your account yet. Finish the go-live checklist on your Intents dashboard (a verified email and a payout wallet), then press Go live again."
 Connect needs this store's addresses on one domain. Enter your keys manually instead.,Connect needs this store's addresses on one domain. Enter your keys manually instead.
 "Connect needs your store on https://. Enter your keys manually instead, or switch the store to https.","Connect needs your store on https://. Enter your keys manually instead, or switch the store to https."
 That connection took too long and has expired. %1,That connection took too long and has expired. %1
 "That connection was not started from this admin account, so it was ignored. %1","That connection was not started from this admin account, so it was ignored. %1"
 There was no connection waiting for this admin account. %1,There was no connection waiting for this admin account. %1
-intents.fi sent back something this store could not use. %1,intents.fi sent back something this store could not use. %1
+Intents sent back something this store could not use. %1,Intents sent back something this store could not use. %1
 The connection could not be finished. Details are in var/log/intentsfi_checkout.log. %1,The connection could not be finished. Details are in var/log/intentsfi_checkout.log. %1
-This link has expired. Go back to your Magento admin and press Connect intents.fi again.,This link has expired. Go back to your Magento admin and press Connect intents.fi again.
-"intents.fi returned a payment made for a different order, so it was not used. Check that no other store shares this intents.fi key with the same base URL.","intents.fi returned a payment made for a different order, so it was not used. Check that no other store shares this intents.fi key with the same base URL."
-Connect intents.fi,Connect intents.fi
-"Sign in or sign up on intents.fi, approve, and come back here connected in test mode, with your key and payment notifications set up. No keys to copy. Test payments never move real money.","Sign in or sign up on intents.fi, approve, and come back here connected in test mode, with your key and payment notifications set up. No keys to copy. Test payments never move real money."
+This link has expired. Go back to your Magento admin and press Connect to Intents again.,This link has expired. Go back to your Magento admin and press Connect to Intents again.
+"Intents returned a payment made for a different order, so it was not used. Check that no other store shares this Intents key with the same base URL.","Intents returned a payment made for a different order, so it was not used. Check that no other store shares this Intents key with the same base URL."
+Connect to Intents,Connect to Intents
+"Sign in or sign up on Intents, approve, and come back here connected in test mode, with your key and payment notifications set up. No keys to copy. Test payments never move real money.","Sign in or sign up on Intents, approve, and come back here connected in test mode, with your key and payment notifications set up. No keys to copy. Test payments never move real money."
 Prefer to paste keys? Use Enter keys manually below.,Prefer to paste keys? Use Enter keys manually below.
 A key entered manually is saved for this scope. Connecting replaces it.,A key entered manually is saved for this scope. Connecting replaces it.
 Connected,Connected
@@ -99,14 +99,14 @@ as %1,as %1
 Test mode,Test mode
 Store: %1,Store: %1
 Payment notifications: working,Payment notifications: working
-Payment notifications: not set up. Press Connect intents.fi again once the store answers on https://.,Payment notifications: not set up. Press Connect intents.fi again once the store answers on https://.
+Payment notifications: not set up. Press Connect to Intents again once the store answers on https://.,Payment notifications: not set up. Press Connect to Intents again once the store answers on https://.
 Go live,Go live
 Disconnect,Disconnect
-Go live gets your live key once the go-live checklist on your intents.fi dashboard is done: a verified email and a payout wallet.,Go live gets your live key once the go-live checklist on your intents.fi dashboard is done: a verified email and a payout wallet.
+Go live gets your live key once the go-live checklist on your Intents dashboard is done: a verified email and a payout wallet.,Go live gets your live key once the go-live checklist on your Intents dashboard is done: a verified email and a payout wallet.
 "Disconnect this store? Its keys are revoked at once, and Intents Checkout stops taking payments until you connect again or enter keys.","Disconnect this store? Its keys are revoked at once, and Intents Checkout stops taking payments until you connect again or enter keys."
-"Let customers pay with the crypto they already hold, and receive one stablecoin in your own wallet. Non-custodial: intents.fi never holds your funds. Questions: <a href=""mailto:support@intents.fi"">support@intents.fi</a>.","Let customers pay with the crypto they already hold, and receive one stablecoin in your own wallet. Non-custodial: intents.fi never holds your funds. Questions: <a href=""mailto:support@intents.fi"">support@intents.fi</a>."
-intents.fi account,intents.fi account
+"Let customers pay with the crypto they already hold, and receive one stablecoin in your own wallet. Non-custodial: Intents never holds your funds. Questions: <a href=""mailto:support@intents.fi"">support@intents.fi</a>.","Let customers pay with the crypto they already hold, and receive one stablecoin in your own wallet. Non-custodial: Intents never holds your funds. Questions: <a href=""mailto:support@intents.fi"">support@intents.fi</a>."
+Intents account,Intents account
 Enter keys manually,Enter keys manually
-Not needed if you used Connect intents.fi: it fills these in for you.,Not needed if you used Connect intents.fi: it fills these in for you.
-Your secret key from the intents.fi dashboard. <code>ik_test_…</code> runs in test mode and never moves real funds; <code>ik_live_…</code> takes real payments. The mode is read from the prefix.,Your secret key from the intents.fi dashboard. <code>ik_test_…</code> runs in test mode and never moves real funds; <code>ik_live_…</code> takes real payments. The mode is read from the prefix.
+Not needed if you used Connect to Intents: it fills these in for you.,Not needed if you used Connect to Intents: it fills these in for you.
+Your secret key from your Intents dashboard. <code>ik_test_…</code> runs in test mode and never moves real funds; <code>ik_live_…</code> takes real payments. The mode is read from the prefix.,Your secret key from your Intents dashboard. <code>ik_test_…</code> runs in test mode and never moves real funds; <code>ik_live_…</code> takes real payments. The mode is read from the prefix.
 The <code>whsec_…</code> secret shown when you add the webhook URL below to the same key. Orders are only marked paid by webhooks signed with it.,The <code>whsec_…</code> secret shown when you add the webhook URL below to the same key. Orders are only marked paid by webhooks signed with it.

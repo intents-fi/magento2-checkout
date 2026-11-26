@@ -92,7 +92,7 @@ class Client
         ];
         if ($authed) {
             if (trim($this->apiKey) === '') {
-                throw new ApiException('MODULE_NO_KEY', 'No intents.fi API key is saved.');
+                throw new ApiException('MODULE_NO_KEY', 'No Intents API key is saved.');
             }
             $headers['Authorization'] = 'Bearer ' . trim($this->apiKey);
         }
@@ -100,7 +100,7 @@ class Client
         if ($body !== null) {
             $encoded = json_encode($body, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
             if ($encoded === false) {
-                throw new ApiException('MODULE_ENCODE_FAILED', 'Could not encode the request to intents.fi.');
+                throw new ApiException('MODULE_ENCODE_FAILED', 'Could not encode the request to Intents.');
             }
             $headers['Content-Type'] = 'application/json';
         }
@@ -111,7 +111,7 @@ class Client
             $response = $this->transport->send($method, $url, $headers, $encoded, self::TIMEOUT);
         } catch (\RuntimeException $e) {
             $this->log(sprintf('%s %s failed: %s', $method, $path, self::redact($e->getMessage(), $this->apiKey)));
-            throw new ApiException('MODULE_UNREACHABLE', 'Could not reach intents.fi. Please try again.');
+            throw new ApiException('MODULE_UNREACHABLE', 'Could not reach Intents. Please try again.');
         }
 
         $status = (int) $response['status'];
@@ -120,13 +120,13 @@ class Client
         if ($status >= 200 && $status < 300) {
             if (!is_array($parsed)) {
                 $this->log(sprintf('%s %s returned %d with a body that is not JSON', $method, $path, $status));
-                throw new ApiException('MODULE_BAD_RESPONSE', 'intents.fi returned an unexpected response.', $status);
+                throw new ApiException('MODULE_BAD_RESPONSE', 'Intents returned an unexpected response.', $status);
             }
             return $parsed;
         }
 
         $code = 'HTTP_' . $status;
-        $message = sprintf('intents.fi returned an error (HTTP %d).', $status);
+        $message = sprintf('Intents returned an error (HTTP %d).', $status);
         if (is_array($parsed) && is_array($parsed['error'] ?? null)) {
             if (is_string($parsed['error']['code'] ?? null)) {
                 $code = $parsed['error']['code'];

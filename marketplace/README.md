@@ -5,7 +5,7 @@ Not part of the module: `bin/build-dist.sh` leaves this folder out of the zip.
 | File | What it is | Marketplace field |
 |---|---|---|
 | `listing.md` | name, short description (no price), long description (what it does, how it works, requirements, pricing, external services, support), feature bullets, FAQ, changelog, tested versions, source-code note | Marketing: descriptions, features; Technical: notes for the reviewer |
-| `release-notes.md` | what is in 1.0.0 | Release notes |
+| `release-notes.md` | what is in each version (1.0.1 and 1.0.0) | Release notes |
 | `user-guide.pdf` | user and installation guide, built from `user-guide.html` | Documentation: user guide, installation guide |
 | `icon-512.png` | the square Intents logo from the brand kit (`brand/assets/directory/intents-logo-square-512.png`), 512×512 | Product icon |
 | `screenshots/` | see below | Gallery |
@@ -19,7 +19,7 @@ Real captures from the `dev/magento` store (Magento Open Source 2.4.8-p5, Luma, 
 
 | File | Caption |
 |---|---|
-| `screenshots/1-settings-test-mode.png` | The settings in test mode: Connect intents.fi, or enter keys manually. |
+| `screenshots/1-settings-test-mode.png` | The settings in test mode: Connect to Intents, or enter keys manually. |
 | `screenshots/2-checkout-pay-with-crypto.png` | "Pay with crypto" at checkout: the price first. |
 | `screenshots/3-paid-order-admin.png` | A paid order: Processing, Total Paid, and the payment confirmation in its comments. |
 | `screenshots/payment-page.png` | (extra, for the guide) The payment page: the order total, then the way to pay. |
@@ -53,8 +53,8 @@ Composer downloads.
    support@intents.fi, payout/tax details only if the extension will ever be paid; it is free).
 2. Create the extension: name and description from `listing.md`, category Payments, free,
    compatibility: only the versions under "Tested versions" in `listing.md`.
-3. Technical submission: upload `plugins/.dist/intentsfi-magento2-1.0.0.zip` (built with
-   `plugins/magento/bin/build-dist.sh`; check `bin/phpcs.sh` is clean first). Version `1.0.0`,
+3. Technical submission: upload `plugins/.dist/intentsfi-magento2-1.0.1.zip` (built with
+   `plugins/magento/bin/build-dist.sh`; check `bin/phpcs.sh` is clean first). Version `1.0.1`,
    the package name `intentsfi/module-checkout`, and the release notes. The automated review
    runs the Magento Coding Standard, installation and compilation on its own install.
 4. Marketing submission: the descriptions, feature bullets, FAQ, icon, screenshots and

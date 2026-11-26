@@ -17,6 +17,6 @@ class CurrencyValidator extends AbstractValidator
     {
         $currency = strtoupper((string) ($validationSubject['currency'] ?? ''));
         $ok = $currency === CurrencySupport::SUPPORTED;
-        return $this->createResult($ok, $ok ? [] : [__('intents.fi invoices are priced in USD only.')]);
+        return $this->createResult($ok, $ok ? [] : [__('Intents invoices are priced in USD only.')]);
     }
 }

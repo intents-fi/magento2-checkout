@@ -39,7 +39,7 @@ class Back implements HttpGetActionInterface
             $raw = $this->rawFactory->create();
             $raw->setHttpResponseCode(400);
             $raw->setHeader('Content-Type', 'text/plain; charset=utf-8', true);
-            return $raw->setContents((string) __('This link has expired. Go back to your Magento admin and press Connect intents.fi again.'));
+            return $raw->setContents((string) __('This link has expired. Go back to your Magento admin and press Connect to Intents again.'));
         }
         return $this->redirectFactory->create()->setUrl($target);
     }

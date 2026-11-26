@@ -1,10 +1,22 @@
 # Release notes: Intents Checkout for Magento
 
+## 1.0.1
+
+**Compatibility:** see "Tested versions" in `listing.md`. Luma-based checkout.
+
+- PHP 8.4 and 8.5 are now supported: tested on Magento Open Source 2.4.9 with each, as well as
+  PHP 8.2 and 8.3 as before. Adobe lists PHP 8.5 for Magento 2.4.9.
+- The package description now names Magento Open Source only. Adobe Commerce has not been
+  tested yet.
+- The admin settings, order comments and messages now say Intents instead of intents.fi. The
+  Connect button is now **Connect to Intents**. Nothing to reconfigure: settings, keys and
+  orders are unchanged.
+
 ## 1.0.0 (first public release)
 
 **Compatibility:** see "Tested versions" in `listing.md`. Luma-based checkout.
 
-- Connect intents.fi: connect the store in a few clicks with no keys to copy. The key and payment
+- Connect: connect the store in a few clicks with no keys to copy. The key and payment
   notifications are set up for you; **Go live** and **Disconnect** on the same settings page.
   Manual key entry still works.
 - "Pay with crypto" at checkout, with the order total first. Customers pay on the hosted Intents

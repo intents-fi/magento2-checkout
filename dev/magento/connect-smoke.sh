@@ -71,7 +71,7 @@ key_prefix() { (cd "$SRC" && php -r 'require "app/bootstrap.php"; $b=\Magento\Fr
   $om=$b->getObjectManager(); $c=$om->get(\IntentsFi\Checkout\Model\Config::class); echo substr($c->apiKeyForWebsite(null),0,8), " ", $c->webhookSecret() !== "" ? "secret" : "nosecret";'); }
 
 echo "== connect (test)"
-START=$(link test); [ -n "$START" ] || fail "no Connect intents.fi link"
+START=$(link test); [ -n "$START" ] || fail "no Connect to Intents link"
 round_trip "$START" | grep -q 'system_config/edit/section/payment' || fail "did not land back on the payment settings"
 grep -q 'Connected. Your keys and payment notifications are set up.' "$TMP/back.html" || fail "no Connected message"
 [ "$(key_prefix)" = "ik_test_ secret" ] || fail "test key and webhook secret not saved: $(key_prefix)"

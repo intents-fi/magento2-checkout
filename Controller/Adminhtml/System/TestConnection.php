@@ -44,7 +44,7 @@ class TestConnection extends Action implements HttpPostActionInterface
         try {
             $merchant = $this->clientFactory->create($key)->getMerchant();
         } catch (ApiException $e) {
-            return $json->setData(['ok' => false, 'message' => (string) __('intents.fi said: %1 (%2)', $e->getMessage(), $e->getApiCode())]);
+            return $json->setData(['ok' => false, 'message' => (string) __('Intents said: %1 (%2)', $e->getMessage(), $e->getApiCode())]);
         }
 
         $settlement = is_array($merchant['settlement'] ?? null) ? $merchant['settlement'] : [];
@@ -58,7 +58,7 @@ class TestConnection extends Action implements HttpPostActionInterface
         if (is_string($settlement['address'] ?? null)) {
             $parts[] = (string) __('settles to %1', $settlement['address']);
         } else {
-            $parts[] = (string) __('no settlement wallet set yet: add one in the intents.fi dashboard');
+            $parts[] = (string) __('no settlement wallet set yet: add one in your Intents dashboard');
         }
         return $json->setData(['ok' => true, 'message' => implode(' · ', $parts)]);
     }

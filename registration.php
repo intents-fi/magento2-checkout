@@ -1,6 +1,6 @@
 <?php
 /**
- * Intents Checkout for Magento Open Source and Adobe Commerce.
+ * Intents Checkout for Magento Open Source.
  */
 declare(strict_types=1);
 

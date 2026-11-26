@@ -30,7 +30,7 @@ class CurrencySupport
 
         if ($base !== self::SUPPORTED) {
             return sprintf(
-                'The base currency is %s. intents.fi invoices are priced in %s and this module never converts prices, so the payment method stays hidden at checkout until the base currency is %s.',
+                'The base currency is %s. Intents invoices are priced in %s and this module never converts prices, so the payment method stays hidden at checkout until the base currency is %s.',
                 $base === '' ? 'not set' : $base,
                 self::SUPPORTED,
                 self::SUPPORTED
@@ -38,7 +38,7 @@ class CurrencySupport
         }
         if ($order !== self::SUPPORTED) {
             return sprintf(
-                'Customers are being charged in %s. intents.fi invoices are priced in %s and this module never converts prices, so the payment method is hidden for %s carts.',
+                'Customers are being charged in %s. Intents invoices are priced in %s and this module never converts prices, so the payment method is hidden for %s carts.',
                 $order === '' ? 'an unknown currency' : $order,
                 self::SUPPORTED,
                 $order === '' ? 'these' : $order

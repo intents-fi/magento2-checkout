@@ -31,20 +31,20 @@ class Connect extends Field
      */
     public static function messages(): array
     {
-        $again = __('Press Connect intents.fi to try again.');
+        $again = __('Press Connect to Intents again.');
         return [
             'connected' => ['success', __('Connected. Your keys and payment notifications are set up.')],
-            'connected_no_webhook' => ['warning', __('Connected, but payment notifications could not be set up, so paid orders will not update by themselves. intents.fi only sends them to an https:// address your store answers on. Press Connect intents.fi again once that is fixed.')],
+            'connected_no_webhook' => ['warning', __('Connected, but payment notifications could not be set up, so paid orders will not update by themselves. Intents only sends them to an https:// address your store answers on. Press Connect to Intents again once that is fixed.')],
             'disconnected' => ['success', __('Disconnected. The keys this store used have been revoked.')],
             'not_connected' => ['notice', __('This scope is not connected through Connect, so there was nothing to disconnect.')],
             'cancelled' => ['notice', __('Connection cancelled. Nothing was changed.')],
-            'live_locked' => ['warning', __('Live payments are not open for your account yet. Finish the go-live checklist on your intents.fi dashboard (a verified email and a payout wallet), then press Go live again.')],
+            'live_locked' => ['warning', __('Live payments are not open for your account yet. Finish the go-live checklist on your Intents dashboard (a verified email and a payout wallet), then press Go live again.')],
             'origin' => ['error', __('Connect needs this store\'s addresses on one domain. Enter your keys manually instead.')],
             'https' => ['error', __('Connect needs your store on https://. Enter your keys manually instead, or switch the store to https.')],
             'expired' => ['error', __('That connection took too long and has expired. %1', $again)],
             'state' => ['error', __('That connection was not started from this admin account, so it was ignored. %1', $again)],
             'no_request' => ['error', __('There was no connection waiting for this admin account. %1', $again)],
-            'bad_code' => ['error', __('intents.fi sent back something this store could not use. %1', $again)],
+            'bad_code' => ['error', __('Intents sent back something this store could not use. %1', $again)],
             'exchange_failed' => ['error', __('The connection could not be finished. Details are in var/log/intentsfi_checkout.log. %1', $again)],
         ];
     }

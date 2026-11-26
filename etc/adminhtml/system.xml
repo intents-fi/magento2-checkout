@@ -4,7 +4,7 @@
         <section id="payment">
             <group id="intentsfi_checkout" translate="label comment" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0">
                 <label>Intents Checkout</label>
-                <comment><![CDATA[Let customers pay with the crypto they already hold, and receive one stablecoin in your own wallet. Non-custodial: intents.fi never holds your funds. Questions: <a href="mailto:support@intents.fi">support@intents.fi</a>.]]></comment>
+                <comment><![CDATA[Let customers pay with the crypto they already hold, and receive one stablecoin in your own wallet. Non-custodial: Intents never holds your funds. Questions: <a href="mailto:support@intents.fi">support@intents.fi</a>.]]></comment>
 
                 <field id="currency_notice" translate="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Store currency</label>
@@ -22,17 +22,17 @@
                     <validate>required-entry</validate>
                 </field>
                 <field id="connect" translate="label" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>intents.fi account</label>
+                    <label>Intents account</label>
                     <frontend_model>IntentsFi\Checkout\Block\Adminhtml\System\Config\Connect</frontend_model>
                 </field>
                 <field id="manual_keys" translate="label comment" sortOrder="29" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Enter keys manually</label>
-                    <comment>Not needed if you used Connect intents.fi: it fills these in for you.</comment>
+                    <comment>Not needed if you used Connect to Intents: it fills these in for you.</comment>
                     <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
                 </field>
                 <field id="api_key" translate="label comment" type="obscure" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>API key</label>
-                    <comment><![CDATA[Your secret key from the intents.fi dashboard. <code>ik_test_…</code> runs in test mode and never moves real funds; <code>ik_live_…</code> takes real payments. The mode is read from the prefix.]]></comment>
+                    <comment><![CDATA[Your secret key from your Intents dashboard. <code>ik_test_…</code> runs in test mode and never moves real funds; <code>ik_live_…</code> takes real payments. The mode is read from the prefix.]]></comment>
                     <config_path>payment/intentsfi_checkout/api_key</config_path>
                     <backend_model>IntentsFi\Checkout\Model\Config\Backend\ApiKey</backend_model>
                 </field>
