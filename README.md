@@ -7,7 +7,7 @@ The module is a thin offsite payment method over the public Intents Checkout API
 invoice for the order, sends the customer to the hosted payment page at pay.intents.fi, and
 invoices the order only when a signed `invoice.paid` webhook says the funds have been delivered.
 
-- Module: `IntentsFi_Checkout` · Composer package: `intentsfi/module-checkout`
+- Module: `IntentsFi_Checkout` · Composer package: `intents/module-checkout` (replaces `intentsfi/module-checkout`)
 - Tested on Magento Open Source **2.4.7-p10 and 2.4.8-p5 on PHP 8.2 and 8.3** (Composer, production
   mode), and 2.4.9 on PHP 8.3, 8.4 and 8.5; see `marketplace/listing.md`. Requires PHP 8.2 to 8.5
   and Magento 2.4.7 or later. Not tested on Adobe Commerce yet.
@@ -31,7 +31,7 @@ bin/magento cache:flush
 **With Composer** (Packagist, from the public mirror of this folder):
 
 ```bash
-composer require intentsfi/module-checkout
+composer require intents/module-checkout
 bin/magento module:enable IntentsFi_Checkout
 bin/magento setup:upgrade
 ```

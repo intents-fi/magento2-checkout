@@ -1,5 +1,16 @@
 # Release notes: Intents Checkout for Magento
 
+## 1.0.2
+
+**Compatibility:** see "Tested versions" in `listing.md`. Luma-based checkout.
+
+- The Composer package is now `intents/module-checkout`, so it matches the Intents vendor name
+  on the Adobe Commerce Marketplace. Install with `composer require intents/module-checkout`.
+  It replaces `intentsfi/module-checkout`: a store on 1.0.1 runs
+  `composer remove intentsfi/module-checkout && composer require intents/module-checkout`, then
+  `bin/magento setup:upgrade`. Settings, keys and orders are unchanged.
+- No other changes: the code is the same as 1.0.1.
+
 ## 1.0.1
 
 **Compatibility:** see "Tested versions" in `listing.md`. Luma-based checkout.

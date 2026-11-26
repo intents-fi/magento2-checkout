@@ -1,4 +1,4 @@
-Magento Coding Standard (magento/magento-coding-standard v40, phpcs 3.13), run on intentsfi-magento2-1.0.1.zip
+Magento Coding Standard (magento/magento-coding-standard v40, phpcs 3.13), run on intentsfi-magento2-1.0.2.zip
 by bin/phpcs.sh on 2026-11-26. Severity 10 (the Marketplace gate): 0 errors, 0 warnings.
 All severities: 0 errors; warnings by file below. 543 of them are formatting in lib/connect/class-connect-protocol.php,
 the WordPress-style Connect protocol shared by every Intents store plugin (not forked, so not reformatted here).

@@ -11,7 +11,7 @@ Intents Checkout – Crypto Payments for Magento 2
 (`brand/LISTING-KIT.md`. The platform brief suggested "… for Magento 2 / Adobe Commerce"; the kit's
 pattern puts one platform trademark last. Never rename a listing during review.)
 
-Package: `intentsfi/module-checkout` (Composer) · module `IntentsFi_Checkout` · publisher **Intents** ·
+Package: `intents/module-checkout` (Composer; replaces `intentsfi/module-checkout`) · module `IntentsFi_Checkout` · publisher **Intents** ·
 https://intents.fi/integrations/magento
 
 ## Short description
@@ -124,6 +124,11 @@ Email support@intents.fi (support is by email only), or read https://intents.fi/
 
 ## Changelog
 
+### 1.0.2
+
+* The Composer package is now `intents/module-checkout` (it replaces `intentsfi/module-checkout`).
+  No code changes.
+
 ### 1.0.1
 
 * PHP 8.4 and 8.5 support, tested on Magento Open Source 2.4.9.
@@ -149,7 +154,8 @@ Email support@intents.fi (support is by email only), or read https://intents.fi/
 
 Run on 2026-11-26 in Docker. Every row: install, `setup:upgrade`, `setup:di:compile`, the
 test-mode checks below, and removal. The 2.4.9 rows on PHP 8.4 and 8.5 were run on 1.0.1; the
-others on 1.0.0, whose code differs only in its screen text and version number.
+others on 1.0.0, whose code differs only in its screen text and version number. 1.0.2 differs
+from 1.0.1 only in its Composer package name and version number.
 
 | Magento Open Source | PHP | Install | Mode | Database | Search |
 |---|---|---|---|---|---|
