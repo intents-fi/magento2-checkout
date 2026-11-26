@@ -5,7 +5,7 @@ Not part of the module: `bin/build-dist.sh` leaves this folder out of the zip.
 | File | What it is | Marketplace field |
 |---|---|---|
 | `listing.md` | name, short description (no price), long description (what it does, how it works, requirements, pricing, external services, support), feature bullets, FAQ, changelog, tested versions, source-code note | Marketing: descriptions, features; Technical: notes for the reviewer |
-| `release-notes.md` | what is in each version (1.0.2, 1.0.1 and 1.0.0) | Release notes |
+| `release-notes.md` | what is in each version (1.0.3, 1.0.2, 1.0.1 and 1.0.0) | Release notes |
 | `user-guide.pdf` | user and installation guide, built from `user-guide.html` | Documentation: user guide, installation guide |
 | `icon-512.png` | the square Intents logo from the brand kit (`brand/assets/directory/intents-logo-square-512.png`), 512×512 | Product icon |
 | `screenshots/` | see below | Gallery |
@@ -53,8 +53,8 @@ Composer downloads.
    support@intents.fi, payout/tax details only if the extension will ever be paid; it is free).
 2. Create the extension: name and description from `listing.md`, category Payments, free,
    compatibility: only the versions under "Tested versions" in `listing.md`.
-3. Technical submission: upload `plugins/.dist/intentsfi-magento2-1.0.2.zip` (built with
-   `plugins/magento/bin/build-dist.sh`; check `bin/phpcs.sh` is clean first). Version `1.0.2`,
+3. Technical submission: upload `plugins/.dist/intentsfi-magento2-1.0.3.zip` (built with
+   `plugins/magento/bin/build-dist.sh`; check `bin/phpcs.sh` is clean first). Version `1.0.3`,
    the package name `intents/module-checkout` (vendor `intents`, the account's Vendor Name), and the release notes. The automated review
    runs the Magento Coding Standard, installation and compilation on its own install.
 4. Marketing submission: the descriptions, feature bullets, FAQ, icon, screenshots and

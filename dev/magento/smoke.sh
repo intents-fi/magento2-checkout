@@ -15,7 +15,7 @@
 set -euo pipefail
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
-SRC="$HERE/src"
+SRC="${MAGENTO_SRC:-$HERE/src}"
 BASE="${BASE:-http://127.0.0.1:8080}"
 KEY="${INTENTSFI_TEST_KEY:?set INTENTSFI_TEST_KEY to an ik_test_ key}"
 API="${INTENTSFI_API:-https://api.intents.fi}"

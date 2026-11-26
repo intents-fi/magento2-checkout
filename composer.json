@@ -2,7 +2,7 @@
     "name": "intents/module-checkout",
     "description": "Intents Checkout for Magento Open Source: customers pay with the crypto they hold, you receive one stablecoin at your own address. Non-custodial.",
     "type": "magento2-module",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "license": "MIT",
     "homepage": "https://intents.fi/docs/checkout/magento",
     "support": {
@@ -29,7 +29,6 @@
     },
     "autoload": {
         "files": ["registration.php"],
-        "classmap": ["lib/"],
         "psr-4": {
             "IntentsFi\\Checkout\\": ""
         }

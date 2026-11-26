@@ -109,9 +109,11 @@ store's own origin and Magento's admin often lives elsewhere. That route only fo
 state belongs to the same admin user, exchanges the code with the verifier
 (`POST /v0/connect/token`), registers the webhook (`POST /v0/webhooks`) and saves both secrets
 encrypted. The protocol code is the one every Intents store plugin shares
-(`plugins/_shared/connect/class-connect-protocol.php`), copied into `lib/connect/` by
-`bin/build-dist.sh`. Connect needs the store on `https://` (plain http only for `localhost`,
-`127.0.0.1` and `.test` hosts, against a development API).
+(`plugins/_shared/connect/class-connect-protocol.php`), generated into this module's namespace as
+`Lib/ConnectProtocol.php` (`IntentsFi\Checkout\Lib\ConnectProtocol`) by `bin/connect-protocol.sh`,
+which `bin/build-dist.sh` runs: only the namespace and class lines change, a unit test checks that,
+and the class loads by autoload with no file include. Connect needs the store on `https://` (plain
+http only for `localhost`, `127.0.0.1` and `.test` hosts, against a development API).
 
 ### Enter keys manually
 
@@ -226,12 +228,12 @@ Model/Connect/ConnectFlow                    Connect: start, the storefront hop,
 Model/Connect/{ScopeSettings,CachePendingStore,StoreUrls}  Connect's Magento side
 Controller/Adminhtml/Connect/{Start,Callback,Disconnect}   the Connect buttons and the way back
 Controller/Connect/Back                      GET /intentsfi/connect/back: forwards the return to the admin
-lib/connect/ (built)                         the shared Connect protocol, copied in by bin/build-dist.sh
+Lib/ConnectProtocol.php (generated)          the shared Connect protocol in the module namespace (bin/connect-protocol.sh)
 Observer/                                    availability (USD + key), close the invoice on cancel
 view/                                        checkout renderer and the admin button
 Test/Unit/                                   PHPUnit for the pure logic
 bin/run-phpunit.sh, bin/build-dist.sh        tests, and the zip that ships
-bin/phpcs.sh                                 the Magento Coding Standard on the built zip (Marketplace review)
+bin/phpcs.sh                                 the Magento Coding Standard v25 and v40 on the built zip, annotations ignored (Marketplace review)
 marketplace/                                 Adobe Commerce Marketplace listing, user guide, screenshots (not shipped)
 dev/magento/                                 a throwaway Magento install to test on
 ```
@@ -252,7 +254,7 @@ wrong mode, live locked before go-live, Go live revoking the test connection, Di
 never revoking a key entered by hand.
 
 ```bash
-bin/phpcs.sh              # Magento Coding Standard, severity 10, on the built zip
+bin/phpcs.sh              # Magento Coding Standard v25 + v40, severity 10, --ignore-annotations, on the built zip
 ```
 
 ### A real Magento install

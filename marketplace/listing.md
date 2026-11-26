@@ -124,6 +124,11 @@ Email support@intents.fi (support is by email only), or read https://intents.fi/
 
 ## Changelog
 
+### 1.0.3
+
+* The Connect protocol loads without a file include (it is now a class in the module's own
+  namespace), so the extension passes the Marketplace code check. No behaviour change.
+
 ### 1.0.2
 
 * The Composer package is now `intents/module-checkout` (it replaces `intentsfi/module-checkout`).
@@ -152,26 +157,35 @@ Email support@intents.fi (support is by email only), or read https://intents.fi/
 
 ## Tested versions
 
-Run on 2026-11-26 in Docker. Every row: install, `setup:upgrade`, `setup:di:compile`, the
-test-mode checks below, and removal. The 2.4.9 rows on PHP 8.4 and 8.5 were run on 1.0.1; the
-others on 1.0.0, whose code differs only in its screen text and version number. 1.0.2 differs
-from 1.0.1 only in its Composer package name and version number.
+Run on 2026-11-26 in Docker, all on 1.0.3 (`intentsfi-magento2-1.0.3.zip`,
+sha256 9cae91069d57b7e3c38ddca0535aacdce809988ebcdd314e20b0194b3a82d719). Every row is a fresh
+`setup:install`, then the module installed, `setup:upgrade`, `setup:di:compile` (production mode:
+`deploy:mode:set production`, which also deploys static content), the checks below, and removal.
 
 | Magento Open Source | PHP | Install | Mode | Database | Search |
 |---|---|---|---|---|---|
-| 2.4.9 | 8.5.13, 8.4.28 | zip in `app/code` (1.0.1) | developer | MariaDB 12.3 | OpenSearch 3.10.1 |
-| 2.4.7-p10 | 8.2, 8.3 | `composer require` from the mirror repository | production (`setup:static-content:deploy`) | MariaDB 10.6 | OpenSearch 2.19 |
-| 2.4.8-p5 | 8.2, 8.3 | `composer require` from the mirror repository | production | MariaDB 11.4 | OpenSearch 2.19 |
-| 2.4.9 | 8.3 | zip in `app/code` | developer | MariaDB 11.4 | OpenSearch 2.19 |
-| 2.4.7-p9 | 8.3 | zip in `app/code` | developer | MariaDB 10.6 | OpenSearch 2.19 |
+| 2.4.9 | 8.3.37, 8.4.28, 8.5.13 | zip in `app/code` | developer | MariaDB 12.3.3 | OpenSearch 3.10.1 |
+| 2.4.9 | 8.3.37, 8.4.28, 8.5.13 | `composer require intents/module-checkout` from a local copy of the package | production | MariaDB 12.3.3 | OpenSearch 3.10.1 |
+| 2.4.8-p5 | 8.2.36, 8.3.37 | `composer require intents/module-checkout` from a local copy of the package | production | MariaDB 11.4.13 | OpenSearch 3.10.1 |
+| 2.4.7-p10 | 8.2.36, 8.3.37 | `composer require intents/module-checkout` from a local copy of the package | production | MariaDB 10.11.19 | OpenSearch 2.19.1 |
+
+"A local copy of the package" is a Composer artifact repository holding the zip above, which is
+how the Marketplace distributes it; the module then loads from `vendor/intents/module-checkout`.
 
 Checks on each: Connect, Go live and Disconnect through the admin (against a mock of the Connect
 endpoints); Test connection; a test-mode order against api.intents.fi paid by a signed webhook
 (invoice created, order Processing, comment "Settled: 9.96 USDC on Base"); a replayed webhook
-creates no second invoice; a forged signature gets 401; `module:disable` + `setup:upgrade` (and,
-on 2.4.8-p5, `module:uninstall --remove-data`) leave the store working.
+creates no second invoice; a forged signature gets 401; `module:disable` + `setup:upgrade` leave
+the storefront and admin working. On 2.4.8-p5 (both PHP versions), also
+`module:uninstall --remove-data`: the module's data (its table and every
+`payment/intentsfi_checkout/*` setting) and its registration are removed and the store keeps
+working. Magento's own `composer remove` step at the end of that command could not complete in the
+test environment (it installs the project's dev packages, which need GitHub credentials there), so
+the package was removed with `composer remove --update-no-dev intents/module-checkout` instead.
 
-The pure-logic PHPUnit suite (`bin/run-phpunit.sh`, 104 tests) also passes on PHP 8.4 and 8.5.
+The pure-logic PHPUnit suite (`bin/run-phpunit.sh`, 106 tests) passes on PHP 8.2, 8.3, 8.4 and 8.5.
+`bin/phpcs.sh`: Magento Coding Standard v25 and v40, severity 10, with `--ignore-annotations`:
+0 errors, 0 warnings.
 
 Not run: Adobe Commerce (on-premises or cloud); PHP 8.4 and 8.5 on 2.4.7 or 2.4.8. `composer.json`
 requires PHP 8.2, 8.3, 8.4 or 8.5 (`~8.2.0||~8.3.0||~8.4.0||~8.5.0`) and `magento/framework`
@@ -181,5 +195,5 @@ requires PHP 8.2, 8.3, 8.4 or 8.5 (`~8.2.0||~8.3.0||~8.4.0||~8.5.0`) and `magent
 
 Nothing in the package is compiled, minified or obfuscated: the PHP, `.phtml` templates, Knockout
 template and RequireJS files ship as written, with the licence (`LICENSE`, MIT). The one use of
-`base64_encode`, in `lib/connect/class-connect-protocol.php`, builds the base64url PKCE challenge
+`base64_encode`, in `Lib/ConnectProtocol.php`, builds the base64url PKCE challenge
 and random state values required by RFC 7636, and is commented as such.

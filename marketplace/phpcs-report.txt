@@ -1,7 +1,10 @@
-Magento Coding Standard (magento/magento-coding-standard v40, phpcs 3.13), run on intentsfi-magento2-1.0.2.zip
-by bin/phpcs.sh on 2026-11-26. Severity 10 (the Marketplace gate): 0 errors, 0 warnings.
-All severities: 0 errors; warnings by file below. 543 of them are formatting in lib/connect/class-connect-protocol.php,
-the WordPress-style Connect protocol shared by every Intents store plugin (not forked, so not reformatted here).
+Magento Coding Standard on intentsfi-magento2-1.0.3.zip, run by bin/phpcs.sh on 2026-11-26 with
+--ignore-annotations (as Adobe's EQP runs it: phpcs:ignore comments are not honoured).
+  magento/magento-coding-standard 25 (phpcs 3.13.6), severity 10 (the Marketplace gate): 0 errors, 0 warnings.
+  magento/magento-coding-standard 40 (phpcs 3.13.6), severity 10 (the Marketplace gate): 0 errors, 0 warnings.
+All severities (v40): 0 errors; warnings by file below. 542 of them are formatting in
+Lib/ConnectProtocol.php, generated from the WordPress-style Connect protocol that every Intents
+store plugin shares (not forked, so not reformatted here).
 
 PHP CODE SNIFFER REPORT SUMMARY
 ---------------------------------------------------------------------------------
@@ -24,7 +27,7 @@ Controller/Connect/Back.php                                      0       3
 Controller/Webhook/Index.php                                     0       4
 Gateway/Command/InitializeCommand.php                            0       1
 Gateway/Validator/CurrencyValidator.php                          0       1
-lib/connect/class-connect-protocol.php                           0       543
+Lib/ConnectProtocol.php                                          0       542
 Model/Amount.php                                                 0       7
 Model/ClientFactory.php                                          0       3
 Model/Config.php                                                 0       10
@@ -44,7 +47,6 @@ Model/Connect/CachePendingStore.php                              0       9
 Model/Connect/ConnectFlow.php                                    0       27
 Model/Connect/FlowProvider.php                                   0       4
 Model/Connect/PendingStoreInterface.php                          0       8
-Model/Connect/Protocol.php                                       0       2
 Model/Connect/ScopeSettings.php                                  0       10
 Model/Connect/SettingsInterface.php                              0       7
 Model/Connect/StoreUrls.php                                      0       7
@@ -65,12 +67,12 @@ Setup/Uninstall.php                                              0       1
 view/adminhtml/templates/system/config/connect.phtml             0       7
 view/adminhtml/templates/system/config/test-connection.phtml     0       1
 ---------------------------------------------------------------------------------
-A TOTAL OF 0 ERRORS AND 912 WARNINGS WERE FOUND IN 57 FILES
+A TOTAL OF 0 ERRORS AND 909 WARNINGS WERE FOUND IN 56 FILES
 ---------------------------------------------------------------------------------
 PHPCBF CAN FIX 521 OF THESE SNIFF VIOLATIONS AUTOMATICALLY
 ---------------------------------------------------------------------------------
 
-Time: 2.94 secs; Memory: 20MB
+Time: 3.17 secs; Memory: 20MB
 
 
 PHP CODE SNIFFER VIOLATION SOURCE SUMMARY
@@ -78,7 +80,7 @@ PHP CODE SNIFFER VIOLATION SOURCE SUMMARY
     STANDARD  CATEGORY            SNIFF                                                       COUNT
 ---------------------------------------------------------------------------------------------------
 [x] Generic   White space         Disallow tab indent tabs used                               213
-[ ] Magento2  Annotation          Method annotation structure no comment block                111
+[ ] Magento2  Annotation          Method annotation structure no comment block                110
 [ ] Generic   Files               Line length too long                                        91
 [x] Generic   White space         Scope indent incorrect                                      85
 [ ] Magento2  Annotation          Method annotation structure method annotation               55
@@ -86,7 +88,7 @@ PHP CODE SNIFFER VIOLATION SOURCE SUMMARY
 [x] PSR2      Methods             Function call signature space before close bracket          52
 [x] Generic   White space         Scope indent incorrect exact                                49
 [ ] Magento2  Annotation          Method arguments param missing                              49
-[ ] Magento2  Functions           Static function static function                             35
+[ ] Magento2  Functions           Static function static function                             34
 [ ] Magento2  Annotation          Method arguments argument missing                           28
 [x] PSR2      Control structures  Control structure spacing space before close brace          14
 [x] PSR2      Control structures  Control structure spacing spacing after open brace          14
@@ -102,10 +104,8 @@ PHP CODE SNIFFER VIOLATION SOURCE SUMMARY
 [ ] Magento2  Exceptions          Throw catch throw catch                                     1
 [ ] Magento2  Performance         Foreach array merge foreach array merge                     1
 [x] PSR2      Classes             Class declaration open brace new line                       1
-[ ] Squiz     Classes             Valid class name not camel caps                             1
 ---------------------------------------------------------------------------------------------------
-A TOTAL OF 912 SNIFF VIOLATIONS WERE FOUND IN 26 SOURCES
+A TOTAL OF 909 SNIFF VIOLATIONS WERE FOUND IN 25 SOURCES
 ---------------------------------------------------------------------------------------------------
 PHPCBF CAN FIX THE 12 MARKED SOURCES AUTOMATICALLY (521 VIOLATIONS IN TOTAL)
 ---------------------------------------------------------------------------------------------------
-

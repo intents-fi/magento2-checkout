@@ -1,5 +1,16 @@
 # Release notes: Intents Checkout for Magento
 
+## 1.0.3
+
+**Compatibility:** see "Tested versions" in `listing.md`. Luma-based checkout.
+
+- The Connect protocol now loads without a file include: it is a class in the module's own
+  namespace (`IntentsFi\Checkout\Lib\ConnectProtocol`), found by the autoloader whether the
+  module is installed with Composer or unzipped into `app/code`. This passes the Adobe Commerce
+  Marketplace code check, which refused the `require_once` 1.0.2 used.
+- No behaviour change: Connect, payments, webhooks, settings, keys and orders work as before.
+  Nothing to reconfigure.
+
 ## 1.0.2
 
 **Compatibility:** see "Tested versions" in `listing.md`. Luma-based checkout.

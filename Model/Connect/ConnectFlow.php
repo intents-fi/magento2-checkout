@@ -8,7 +8,7 @@ namespace IntentsFi\Checkout\Model\Connect;
 
 use IntentsFi\Checkout\Model\Api\ApiException;
 use IntentsFi\Checkout\Model\Api\Client;
-use IntentsFi\Connect\Connect_Protocol;
+use IntentsFi\Checkout\Lib\ConnectProtocol;
 
 /**
  * The Magento half of intents.fi Connect (specs/BRIEF-merchant-onboarding.md Part D), without
@@ -53,7 +53,6 @@ class ConnectFlow
         private readonly string $dashboardUrl = '',
         private $log = null
     ) {
-        Protocol::load();
     }
 
     /**
@@ -76,24 +75,24 @@ class ConnectFlow
         ?int $websiteId,
         int $now
     ): array {
-        if (!Connect_Protocol::same_origin($siteUrl, $returnUrl)) {
+        if (!ConnectProtocol::same_origin($siteUrl, $returnUrl)) {
             return ['ok' => false, 'result' => 'origin'];
         }
         if (!self::secureEnough($siteUrl)) {
             return ['ok' => false, 'result' => 'https'];
         }
 
-        $pending = Connect_Protocol::begin($mode, $now);
+        $pending = ConnectProtocol::begin($mode, $now);
         $pending['site_url'] = $siteUrl;
         $pending['webhook_url'] = $webhookUrl;
         $pending['website'] = $websiteId;
-        $this->pending->put($userId, $pending, Connect_Protocol::PENDING_TTL);
-        $this->pending->putReturn($pending['state'], $callbackUrl, Connect_Protocol::PENDING_TTL);
+        $this->pending->put($userId, $pending, ConnectProtocol::PENDING_TTL);
+        $this->pending->putReturn($pending['state'], $callbackUrl, ConnectProtocol::PENDING_TTL);
 
-        $dashboard = $this->dashboardUrl !== '' ? $this->dashboardUrl : Connect_Protocol::DASHBOARD_URL;
+        $dashboard = $this->dashboardUrl !== '' ? $this->dashboardUrl : ConnectProtocol::DASHBOARD_URL;
         return [
             'ok' => true,
-            'url' => Connect_Protocol::authorize_url($dashboard, $pending, self::PLATFORM, $siteUrl, $returnUrl),
+            'url' => ConnectProtocol::authorize_url($dashboard, $pending, self::PLATFORM, $siteUrl, $returnUrl),
         ];
     }
 
@@ -135,7 +134,7 @@ class ConnectFlow
         $pending = $this->pending->take($userId);
         $website = is_array($pending) && is_int($pending['website'] ?? null) ? $pending['website'] : null;
 
-        $checked = Connect_Protocol::check_return($query, $pending, $now);
+        $checked = ConnectProtocol::check_return($query, $pending, $now);
         if (!$checked['ok']) {
             if (($checked['error'] ?? '') === 'state') {
                 $this->log('Connect: a return arrived with a state this admin did not start; ignored.');
@@ -146,7 +145,7 @@ class ConnectFlow
         $mode = ($pending['mode'] ?? '') === 'live' ? 'live' : 'test';
         try {
             $response = ($this->clientFor)('')->exchangeConnectCode(
-                Connect_Protocol::token_body((string) $checked['code'], $pending, (string) $pending['site_url'])
+                ConnectProtocol::token_body((string) $checked['code'], $pending, (string) $pending['site_url'])
             );
         } catch (ApiException $e) {
             return [
@@ -155,7 +154,7 @@ class ConnectFlow
             ];
         }
 
-        $token = Connect_Protocol::check_token($response, $mode);
+        $token = ConnectProtocol::check_token($response, $mode);
         if ($token === null) {
             $this->log('Connect: the token response was not the mode asked for, or malformed; nothing saved.');
             return ['result' => 'exchange_failed', 'website' => $website];
@@ -218,7 +217,7 @@ class ConnectFlow
     private static function secureEnough(string $url): bool
     {
         // The protocol's own origin parser: `scheme://host[:port]`, lower-cased, or null.
-        $origin = Connect_Protocol::origin($url);
+        $origin = ConnectProtocol::origin($url);
         if ($origin === null || preg_match('#^(https?)://(.+?)(?::\d+)?$#', $origin, $m) !== 1) {
             return false;
         }

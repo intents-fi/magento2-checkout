@@ -10,8 +10,10 @@
 # Only the module ships. The dev tooling (dev/, bin/, phpunit.xml.dist, biome.json), the
 # pure-logic tests, dotfiles and the marketplace listing material do not.
 #
-# The Connect protocol is not forked: lib/connect/class-connect-protocol.php must be byte-identical
-# to plugins/_shared/connect/class-connect-protocol.php, the copy every store plugin uses.
+# The Connect protocol is not forked: Lib/ConnectProtocol.php is generated from
+# plugins/_shared/connect/class-connect-protocol.php, the copy every store plugin uses, with only its
+# namespace and class lines rewritten (bin/connect-protocol.sh, run below). It loads by autoload:
+# nothing in the module includes a file by path, which the Marketplace code check refuses.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -29,11 +31,7 @@ for f in composer.json registration.php etc/module.xml; do
 done
 find . -name '*.php' -not -path './dev/*' -print0 | xargs -0 -n1 php -l >/dev/null
 
-SHARED="../_shared/connect/class-connect-protocol.php"
-if [ -f "$SHARED" ] && ! cmp -s "$SHARED" lib/connect/class-connect-protocol.php; then
-  echo "lib/connect/class-connect-protocol.php differs from $SHARED: copy it over" >&2
-  exit 1
-fi
+bin/connect-protocol.sh >&2
 
 STAGE="$(mktemp -d)"
 trap 'rm -rf "$STAGE"' EXIT
