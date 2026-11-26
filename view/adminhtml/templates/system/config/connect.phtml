@@ -1,0 +1,62 @@
+<?php
+/** @var \IntentsFi\Checkout\Block\Adminhtml\System\Config\Connect $block */
+/** @var \Magento\Framework\Escaper $escaper */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+$connection = $block->getConnection();
+?>
+<div id="intentsfi-checkout-connect">
+<?php if ($connection === null): ?>
+    <a class="action-primary" href="<?= $escaper->escapeUrl($block->getStartUrl('test')) ?>">
+        <span><?= $escaper->escapeHtml(__('Connect intents.fi')) ?></span>
+    </a>
+    <p class="note"><span><?= $escaper->escapeHtml(__('Sign in or sign up on intents.fi, approve, and come back here connected in test mode, with your key and payment notifications set up. No keys to copy. Test payments never move real money.')) ?></span></p>
+    <p class="note"><span><?= $escaper->escapeHtml(__('Prefer to paste keys? Use Enter keys manually below.')) ?></span></p>
+    <?php if ($block->hasKey()): ?>
+        <p class="note"><span><?= $escaper->escapeHtml(__('A key entered manually is saved for this scope. Connecting replaces it.')) ?></span></p>
+    <?php endif; ?>
+<?php else: ?>
+    <p>
+        <strong><?= $escaper->escapeHtml(__('Connected')) ?></strong>
+        <?php if ($connection['business'] !== ''): ?>
+            <?= $escaper->escapeHtml(__('as %1', $connection['business'])) ?>
+        <?php endif; ?>
+        · <?= $escaper->escapeHtml($connection['mode'] === 'live' ? __('Live') : __('Test mode')) ?>
+    </p>
+    <p class="note"><span>
+        <?= $escaper->escapeHtml(__('Store: %1', $connection['site'] !== '' ? $connection['site'] : $block->getSiteUrl())) ?>
+        · <?= $escaper->escapeHtml($connection['webhook'] ? __('Payment notifications: working') : __('Payment notifications: not set up. Press Connect intents.fi again once the store answers on https://.')) ?>
+    </span></p>
+    <p>
+        <?php if ($connection['mode'] !== 'live'): ?>
+            <a class="action-primary" href="<?= $escaper->escapeUrl($block->getStartUrl('live')) ?>">
+                <span><?= $escaper->escapeHtml(__('Go live')) ?></span>
+            </a>
+        <?php endif; ?>
+        <button type="button" class="action-default" id="intentsfi-checkout-disconnect">
+            <span><?= $escaper->escapeHtml(__('Disconnect')) ?></span>
+        </button>
+    </p>
+    <?php if ($connection['mode'] !== 'live'): ?>
+        <p class="note"><span><?= $escaper->escapeHtml(__('Go live gets your live key once the go-live checklist on your intents.fi dashboard is done: a verified email and a payout wallet.')) ?></span></p>
+    <?php endif; ?>
+    <?php
+    $url = $escaper->escapeJs($block->getDisconnectUrl());
+    $confirm = $escaper->escapeJs((string) __('Disconnect this store? Its keys are revoked at once, and Intents Checkout stops taking payments until you connect again or enter keys.'));
+    $script = <<<JS
+require(['jquery'], function ($) {
+    $('#intentsfi-checkout-disconnect').on('click', function () {
+        if (!window.confirm('{$confirm}')) {
+            return;
+        }
+        $('<form>', { method: 'post', action: '{$url}' })
+            .append($('<input>', { type: 'hidden', name: 'form_key', value: window.FORM_KEY }))
+            .appendTo('body')
+            .get(0)
+            .submit();
+    });
+});
+JS;
+    ?>
+    <?= /* @noEscape */ $secureRenderer->renderTag('script', [], $script, false) ?>
+<?php endif; ?>
+</div>

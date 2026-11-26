@@ -1,0 +1,10 @@
+# Archives of this module's own repository (the Packagist mirror) leave out the development
+# tooling, as bin/build-dist.sh does for the zip.
+/dev export-ignore
+/bin export-ignore
+/Test export-ignore
+/marketplace export-ignore
+/phpunit.xml.dist export-ignore
+/biome.json export-ignore
+/.gitignore export-ignore
+/.gitattributes export-ignore

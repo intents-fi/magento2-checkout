@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--
+  Declares the payment method to Magento_Payment. Not offered for multishipping: each order needs
+  its own hosted payment, and multishipping places several orders behind one payment step.
+-->
+<payment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Payment:etc/payment.xsd">
+    <methods>
+        <method name="intentsfi_checkout">
+            <allow_multiple_address>0</allow_multiple_address>
+        </method>
+    </methods>
+</payment>

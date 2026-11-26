@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <!-- Every webhook event id applied, so a redelivery is a no-op. The unique key is the guard:
+         two simultaneous deliveries of one event cannot both insert. -->
+    <table name="intentsfi_checkout_webhook_event" resource="default" engine="innodb" comment="Intents Checkout handled webhook events">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
+        <column xsi:type="varchar" name="event_id" nullable="false" length="128" comment="intents.fi event id"/>
+        <column xsi:type="varchar" name="event_type" nullable="false" length="64" comment="Event type"/>
+        <column xsi:type="varchar" name="order_increment_id" nullable="false" length="64" comment="Order increment id"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Handled at"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="INTENTSFI_CHECKOUT_WEBHOOK_EVENT_EVENT_ID">
+            <column name="event_id"/>
+        </constraint>
+        <index referenceId="INTENTSFI_CHECKOUT_WEBHOOK_EVENT_ORDER_INCREMENT_ID" indexType="btree">
+            <column name="order_increment_id"/>
+        </index>
+    </table>
+</schema>

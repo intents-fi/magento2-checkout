@@ -1,0 +1,102 @@
+Magento Coding Standard (magento/magento-coding-standard v40, phpcs 3.13), run on intentsfi-magento2-1.0.0.zip
+by bin/phpcs.sh on 2026-11-26. Severity 10 (the Marketplace gate): 0 errors, 0 warnings.
+All severities: 0 errors; warnings by file below. 543 of them are formatting in lib/connect/class-connect-protocol.php,
+the WordPress-style Connect protocol shared by every intents.fi store plugin (not forked, so not reformatted here).
+
+PHP CODE SNIFFER REPORT SUMMARY
+--------------------------------------------------------------------------------
+FILE                                                            ERRORS  WARNINGS
+--------------------------------------------------------------------------------
+Block/Adminhtml/System/Config/Connect.php  0       20
+Block/Adminhtml/System/Config/CurrencyNotice.php  0       3
+Block/Adminhtml/System/Config/DetectedMode.php  0       2
+Block/Adminhtml/System/Config/TestConnection.php  0       4
+Block/Adminhtml/System/Config/WebhookUrl.php  0       5
+Controller/Adminhtml/Connect/AbstractConnect.php  0       4
+Controller/Adminhtml/Connect/Callback.php  0       2
+Controller/Adminhtml/Connect/Disconnect.php  0       1
+...mp.HQdJYdLtmg/module/Controller/Adminhtml/Connect/Start.php  0       1
+Controller/Adminhtml/System/TestConnection.php  0       5
+Controller/Checkout/Cancel.php       0       4
+Controller/Checkout/Redirect.php     0       4
+Controller/Checkout/Success.php      0       2
+Controller/Connect/Back.php          0       3
+Controller/Webhook/Index.php         0       4
+...tmp.HQdJYdLtmg/module/Gateway/Command/InitializeCommand.php  0       1
+...p.HQdJYdLtmg/module/Gateway/Validator/CurrencyValidator.php  0       1
+...mp.HQdJYdLtmg/module/lib/connect/class-connect-protocol.php  0       543
+Model/Amount.php                     0       7
+Model/ClientFactory.php              0       3
+Model/Config.php                     0       10
+Model/CurrencySupport.php            0       3
+Model/InvoiceManager.php             0       29
+Model/InvoicePlan.php                0       21
+Model/KeyMode.php                    0       6
+Model/PaymentInfo.php                0       3
+Model/SettlementAsset.php            0       8
+Model/Signature.php                  0       8
+Model/Api/ApiException.php           0       3
+Model/Api/Client.php                 0       22
+Model/Api/CurlTransport.php          0       3
+Model/Api/TransportInterface.php     0       4
+Model/Config/Backend/ApiKey.php      0       1
+Model/Connect/CachePendingStore.php  0       9
+Model/Connect/ConnectFlow.php        0       27
+Model/Connect/FlowProvider.php       0       4
+...p.HQdJYdLtmg/module/Model/Connect/PendingStoreInterface.php  0       8
+Model/Connect/Protocol.php           0       3
+Model/Connect/ScopeSettings.php      0       10
+Model/Connect/SettingsInterface.php  0       7
+Model/Connect/StoreUrls.php          0       7
+Model/Ui/ConfigProvider.php          0       2
+Model/Webhook/DbEventLedger.php      0       2
+Model/Webhook/Decision.php           0       1
+...mp.HQdJYdLtmg/module/Model/Webhook/EventLedgerInterface.php  0       1
+Model/Webhook/MagentoOrderPort.php   0       20
+Model/Webhook/Notes.php              0       26
+Model/Webhook/OrderAction.php        0       11
+.../tmp.HQdJYdLtmg/module/Model/Webhook/OrderPortInterface.php  0       8
+Model/Webhook/OrderState.php         0       3
+Model/Webhook/Processor.php          0       6
+Model/Webhook/Result.php             0       2
+...p.HQdJYdLtmg/module/Observer/CancelInvoiceOnOrderCancel.php  0       5
+Observer/RestrictAvailability.php    0       2
+Setup/Uninstall.php                  0       1
+...module/view/adminhtml/templates/system/config/connect.phtml  0       7
+...iew/adminhtml/templates/system/config/test-connection.phtml  0       1
+--------------------------------------------------------------------------------
+A TOTAL OF 0 ERRORS AND 913 WARNINGS WERE FOUND IN 57 FILES
+
+PHP CODE SNIFFER VIOLATION SOURCE SUMMARY
+--------------------------------------------------------------------------------
+    SOURCE                                                                 COUNT
+--------------------------------------------------------------------------------
+[x] Generic.WhiteSpace.DisallowTabIndent.TabsUsed                          213
+[ ] Magento2.Annotation.MethodAnnotationStructure.NoCommentBlock           111
+[ ] Generic.Files.LineLength.TooLong                                       91
+[x] Generic.WhiteSpace.ScopeIndent.Incorrect                               85
+[ ] Magento2.Annotation.MethodAnnotationStructure.MethodAnnotation         55
+[x] PSR2.Methods.FunctionCallSignature.SpaceAfterOpenBracket               52
+[x] PSR2.Methods.FunctionCallSignature.SpaceBeforeCloseBracket             52
+[x] Generic.WhiteSpace.ScopeIndent.IncorrectExact                          49
+[ ] Magento2.Annotation.MethodArguments.ParamMissing                       49
+[ ] Magento2.Functions.StaticFunction.StaticFunction                       35
+[ ] Magento2.Annotation.MethodArguments.ArgumentMissing                    28
+[x] PSR2.ControlStructures.ControlStructureSpacing.SpaceBeforeCloseBrace   14
+[x] PSR2.ControlStructures.ControlStructureSpacing.SpacingAfterOpenBrace   14
+[x] Generic.Arrays.DisallowLongArraySyntax.Found                           13
+[x] Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine           10
+[x] Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterOpen    9
+[x] Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingBeforeClose  9
+[ ] Magento2.Annotation.MethodArguments.VisualAlignment                    7
+[ ] PSR1.Methods.CamelCapsMethodName.NotCamelCaps                          6
+[ ] Magento2.Annotation.MethodArguments.ParamOrder                         3
+[ ] Magento2.Commenting.ClassPropertyPHPDocFormatting.Missing              2
+[ ] Magento2.Annotation.MethodArguments.DuplicateParam                     1
+[ ] Magento2.Exceptions.ThrowCatch.ThrowCatch                              1
+[ ] Magento2.Functions.DiscouragedFunction.DiscouragedWithAlternative      1
+[ ] Magento2.Performance.ForeachArrayMerge.ForeachArrayMerge               1
+[x] PSR2.Classes.ClassDeclaration.OpenBraceNewLine                         1
+[ ] Squiz.Classes.ValidClassName.NotCamelCaps                              1
+--------------------------------------------------------------------------------
+A TOTAL OF 913 SNIFF VIOLATIONS WERE FOUND IN 27 SOURCES

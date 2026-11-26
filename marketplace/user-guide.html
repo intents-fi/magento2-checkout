@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Intents Checkout for Magento: user guide</title>
+<!-- Source of user-guide.pdf. Rebuild: node build-guide.cjs (see README.md in this folder). -->
+<style>
+  @font-face { font-family: Inter; font-weight: 400; src: url(../../../packages/brand/fonts/inter-latin-400-normal.woff); }
+  @font-face { font-family: Inter; font-weight: 500; src: url(../../../packages/brand/fonts/inter-latin-500-normal.woff); }
+  @font-face { font-family: "JetBrains Mono"; font-weight: 400; src: url(../../../packages/brand/fonts/jetbrains-mono-latin-400-normal.woff2); }
+  :root { --ink: #21201C; --muted: #63635E; --line: #E4E4E0; }
+  @page { size: A4; margin: 18mm 18mm 20mm; }
+  body { font: 400 10.5pt/1.55 Inter, sans-serif; color: var(--ink); }
+  h1 { font-weight: 500; font-size: 22pt; margin: 0 0 4pt; }
+  h2 { font-weight: 500; font-size: 14pt; margin: 22pt 0 6pt; border-top: 1px solid var(--line); padding-top: 12pt; }
+  h3 { font-weight: 500; font-size: 11.5pt; margin: 14pt 0 4pt; }
+  p, li { margin: 4pt 0; }
+  .lead { color: var(--muted); font-size: 11.5pt; }
+  code, pre { font-family: "JetBrains Mono", monospace; font-size: 9pt; }
+  pre { background: #F4F4F1; padding: 8pt 10pt; border-radius: 6pt; white-space: pre-wrap; }
+  table { border-collapse: collapse; width: 100%; margin: 6pt 0; }
+  th, td { text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); padding: 4pt 6pt 4pt 0; }
+  th { font-weight: 500; }
+  img { max-width: 100%; border: 1px solid var(--line); border-radius: 6pt; }
+  figure img { display: block; max-height: 115mm; width: auto; margin: 0 auto; }
+  pre, table tr { break-inside: avoid; }
+  figure { margin: 8pt 0; break-inside: avoid; }
+  figcaption { color: var(--muted); font-size: 9pt; }
+  .logo { width: 40pt; height: 40pt; border: 0; }
+</style>
+</head>
+<body>
+<img class="logo" src="icon-512.png" alt="Intents">
+<h1>Intents Checkout for Magento</h1>
+<p class="lead">User and installation guide · version 1.0.0 · tested on Magento Open Source 2.4.7 and 2.4.8 (PHP 8.2 and 8.3) and 2.4.9 (PHP 8.3)</p>
+<p>Intents Checkout adds a <strong>Pay with crypto</strong> payment method to the Magento checkout. Your customer sees the order total first, then pays on a secure intents.fi page with the crypto they already hold. You receive one stablecoin (USDC or USDT on the network you choose) directly in your own wallet. Intents never holds your funds. The fee is 0.4% of each completed payment, for every merchant; test mode is free.</p>
+
+<h2>1. Requirements</h2>
+<ul>
+  <li>Magento Open Source 2.4.7, 2.4.8 or 2.4.9 (the versions tested) with the standard (Luma-based) checkout. Hyvä Checkout is not supported yet.</li>
+  <li>PHP 8.2 or 8.3 with the <code>curl</code> and <code>json</code> extensions (both standard for Magento).</li>
+  <li>The website's base currency and display currency in <strong>US dollars (USD)</strong>. The module never converts, so it hides the method otherwise.</li>
+  <li>The store served over <strong>HTTPS</strong>, so intents.fi can send payment notifications and Connect can return your keys.</li>
+  <li>An intents.fi account. You can create one during Connect. Live payments need a verified email and a payout wallet.</li>
+</ul>
+
+<h2>2. Install</h2>
+<h3>With Composer (Marketplace)</h3>
+<pre>composer require intentsfi/module-checkout
+bin/magento module:enable IntentsFi_Checkout
+bin/magento setup:upgrade
+bin/magento setup:di:compile              # production mode
+bin/magento setup:static-content:deploy   # production mode
+bin/magento cache:flush</pre>
+<h3>From the zip</h3>
+<pre>mkdir -p app/code/IntentsFi/Checkout
+unzip intentsfi-magento2-1.0.0.zip -d app/code/IntentsFi/Checkout
+bin/magento module:enable IntentsFi_Checkout
+bin/magento setup:upgrade</pre>
+<p>Then compile, deploy static content and flush the cache as above. <code>setup:upgrade</code> creates one table, <code>intentsfi_checkout_webhook_event</code>, which remembers the payment notifications already applied.</p>
+
+<h2>3. Connect your store</h2>
+<p>Open <strong>Stores → Configuration → Sales → Payment Methods → Intents Checkout</strong>. Choose the scope first if you run several websites: each website can have its own connection.</p>
+<figure><img src="screenshots/1-settings-test-mode.png" alt="Intents Checkout settings in test mode"><figcaption>The settings in test mode: Connect intents.fi, and Enter keys manually below it.</figcaption></figure>
+<ol>
+  <li>Press <strong>Connect intents.fi</strong>.</li>
+  <li>On dashboard.intents.fi, sign in or sign up, check the store address on the consent screen, and approve.</li>
+  <li>You come back to the same settings page, <strong>connected in test mode</strong>. The module has saved a test key, registered your store's payment notification address and saved its secret. There is nothing to copy.</li>
+  <li>Set <strong>Enabled</strong> to Yes and press <strong>Save Config</strong>.</li>
+</ol>
+<p>Once connected, the same row shows the business and store you are connected as, whether payment notifications work, and the <strong>Go live</strong> and <strong>Disconnect</strong> buttons.</p>
+<p>If something goes wrong, a message at the top of the page says what and what to do: for example, the request expired (it waits 30 minutes), or it was cancelled on the dashboard. Nothing is saved unless the whole round trip succeeds.</p>
+
+<h3>Enter keys manually instead</h3>
+<ol>
+  <li>On dashboard.intents.fi, copy your test secret key (<code>ik_test_…</code>) and paste it into <strong>API key</strong>. A publishable <code>pk_…</code> key is refused.</li>
+  <li>Copy the <strong>Webhook URL</strong> shown, add it on the dashboard's <strong>Webhooks</strong> page for the same key with the <code>invoice.*</code> events, and paste the <code>whsec_…</code> secret it shows into <strong>Webhook secret</strong>.</li>
+  <li><strong>Save Config</strong>, then press <strong>Test connection</strong>: it shows the business, the mode and the wallet the key settles to.</li>
+</ol>
+
+<h2>4. Place a test order</h2>
+<p>Add a product to the cart and go to checkout. <strong>Pay with crypto</strong> shows the amount first; <strong>Continue to payment</strong> places the order at <em>Pending Payment</em> and sends the customer to the payment page.</p>
+<figure><img src="screenshots/2-checkout-pay-with-crypto.png" alt="Pay with crypto at checkout"><figcaption>At checkout: the price first, then a plain explanation.</figcaption></figure>
+<figure><img src="screenshots/payment-page.png" alt="The intents.fi payment page"><figcaption>The payment page, in test mode.</figcaption></figure>
+<p>On a test invoice the page offers <strong>Complete the test payment</strong>. No real money moves. When the payment completes, the order is invoiced, moves to <em>Processing</em>, and the order email is sent.</p>
+<figure><img src="screenshots/3-paid-order-admin.png" alt="A paid order in Magento admin"><figcaption>A paid test order: Processing, Total Paid, and the payment confirmation in the comments.</figcaption></figure>
+
+<h2>5. Go live</h2>
+<p>On your intents.fi dashboard, verify your email and add your payout wallet. Then press <strong>Go live</strong> in the module's settings and approve on the dashboard. The live key and a live payment notification address replace the test ones, and the test connection is revoked. If the checklist is not done yet, the page says so and the store stays in test mode. Place a real $5 order to check it reaches <em>Processing</em> and the funds reach your wallet.</p>
+<p>With keys entered manually: register the webhook URL with the live key, paste the live key and its <code>whsec_…</code> secret, and save. <strong>Mode</strong> reads <em>Live</em>.</p>
+
+<h2>6. How orders are updated</h2>
+<table>
+  <tr><th>Payment event</th><th>Order</th></tr>
+  <tr><td>Payment sent, being confirmed</td><td>a comment only: do not ship yet</td></tr>
+  <tr><td>Paid (funds delivered)</td><td>invoiced, <em>Processing</em>, order email sent</td></tr>
+  <tr><td>Paid, but not the order's amount or currency</td><td><em>On Hold</em> with a comment; never invoiced</td></tr>
+  <tr><td>Underpaid</td><td><em>On Hold</em> with what is still owed; released if the rest arrives</td></tr>
+  <tr><td>Expired or cancelled</td><td><em>Canceled</em>, if nothing was paid</td></tr>
+  <tr><td>Paid after the order was cancelled</td><td>a comment and an admin notification; never invoiced automatically</td></tr>
+  <tr><td>Needs review</td><td>a comment and an admin notification</td></tr>
+</table>
+<p>Notifications are signed and verified; duplicates and out-of-order deliveries change nothing twice. A customer returning to the store never marks an order paid. Cancelling an order in Magento also closes its payment.</p>
+
+<h2>7. Disconnect</h2>
+<p>Press <strong>Disconnect</strong>. The keys and payment notifications Connect made are revoked on intents.fi at once, and cleared from Magento. You can also disconnect from <strong>Integrations</strong> on the dashboard.</p>
+
+<h2>8. Settings reference</h2>
+<table>
+  <tr><th>Setting</th><th>Notes</th></tr>
+  <tr><td>Enabled, Title</td><td>offer the method; what the customer sees (default <em>Pay with crypto</em>)</td></tr>
+  <tr><td>intents.fi account</td><td>Connect intents.fi; once connected: the business, the store, payment notifications, Go live, Disconnect</td></tr>
+  <tr><td>Mode</td><td>read-only: <em>Test</em> or <em>Live</em>, from the saved key</td></tr>
+  <tr><td>API key, Webhook secret</td><td>filled by Connect, or entered manually; stored encrypted, never exported by <code>app:config:dump</code>, never logged</td></tr>
+  <tr><td>Webhook URL</td><td>read-only: <code>https://&lt;store&gt;/intentsfi/webhook</code></td></tr>
+  <tr><td>Test connection</td><td>checks the saved key; save first</td></tr>
+  <tr><td>Applicable countries, Sort order</td><td>standard Magento payment settings</td></tr>
+</table>
+
+<h2>9. Troubleshooting</h2>
+<ul>
+  <li><strong>The method does not show at checkout:</strong> the currency is not USD, the method is not enabled, or no valid key is saved for the website. The settings page says which.</li>
+  <li><strong>Orders stay at Pending Payment:</strong> payment notifications are not arriving. The store must answer on a public <code>https://</code> address; press Connect intents.fi again once it does. Deliveries are logged in <code>var/log/intentsfi_checkout.log</code>, which never contains keys or secrets.</li>
+  <li><strong>"Connect needs your store on https://":</strong> serve the store over HTTPS, or enter keys manually.</li>
+  <li><strong>"Live payments are not open for your account yet":</strong> finish the go-live checklist on the dashboard (a verified email and a payout wallet), then press Go live again.</li>
+</ul>
+
+<h2>10. Uninstall</h2>
+<p>Disconnect first if the store is connected, so its keys are revoked. For a Composer install run <code>bin/magento module:uninstall IntentsFi_Checkout --remove-data</code>: it removes the module, its table and its settings (orders keep their payment details). For a zip install in <code>app/code</code>, run <code>bin/magento module:disable IntentsFi_Checkout</code>, delete <code>app/code/IntentsFi/Checkout</code> and run <code>bin/magento setup:upgrade</code>.</p>
+
+<h2>11. Support</h2>
+<p>Email <strong>support@intents.fi</strong> (support is by email only). Documentation: <code>https://intents.fi/docs/checkout/magento</code>. Terms: <code>https://intents.fi/terms</code>. Privacy: <code>https://intents.fi/privacy</code>.</p>
+</body>
+</html>

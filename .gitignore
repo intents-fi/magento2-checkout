@@ -1,0 +1,8 @@
+dev/phpunit/vendor/
+dev/phpunit/composer.lock
+dev/phpunit/.phpunit.cache/
+.phpunit.cache/
+.phpunit.result.cache
+dev/magento/src/
+dev/magento/.env
+dev/phpcs/

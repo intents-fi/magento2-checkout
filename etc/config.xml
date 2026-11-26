@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <intentsfi_checkout>
+                <active>0</active>
+                <model>IntentsFiCheckoutFacade</model>
+                <title>Pay with crypto</title>
+                <api_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <webhook_secret backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <!-- The order is created pending_payment by the initialize command; it is invoiced
+                     only by a signed invoice.paid webhook. -->
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <currency>USD</currency>
+                <is_gateway>1</is_gateway>
+                <can_initialize>1</can_initialize>
+                <can_use_checkout>1</can_use_checkout>
+                <can_use_internal>0</can_use_internal>
+                <can_authorize>0</can_authorize>
+                <can_capture>0</can_capture>
+                <can_refund>0</can_refund>
+                <can_void>0</can_void>
+                <!-- 0: the Adapter would look for a `cancel` command; closing the invoice on order
+                     cancel is Observer/CancelInvoiceOnOrderCancel. -->
+                <can_cancel>0</can_cancel>
+                <can_edit>0</can_edit>
+                <can_review_payment>0</can_review_payment>
+                <allowspecific>0</allowspecific>
+                <sort_order>10</sort_order>
+                <paymentInfoKeys>intentsfi_invoice_id,intentsfi_reference,intentsfi_mode,intentsfi_paid_asset,intentsfi_settlement_tx</paymentInfoKeys>
+                <privateInfoKeys>intentsfi_mode,intentsfi_reference,intentsfi_amount,intentsfi_sequence,intentsfi_event_rank,intentsfi_held_by,intentsfi_invoice_url,intentsfi_payer_address,intentsfi_origin_tx</privateInfoKeys>
+                <debugReplaceKeys>api_key,webhook_secret,clientSecret,Authorization</debugReplaceKeys>
+            </intentsfi_checkout>
+        </payment>
+    </default>
+</config>

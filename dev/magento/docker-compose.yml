@@ -1,0 +1,26 @@
+# Services for a throwaway Magento Open Source install that IntentsFi_Checkout is tested on.
+# PHP runs on the host (8.2–8.4 with Magento's extensions); see install.sh.
+#
+#   docker compose -f dev/magento/docker-compose.yml up -d
+name: intentsfi-magento
+services:
+  db:
+    image: mariadb:11.4
+    environment:
+      MARIADB_DATABASE: magento
+      MARIADB_USER: magento
+      MARIADB_PASSWORD: magento
+      MARIADB_ROOT_PASSWORD: magento
+    ports: ["127.0.0.1:33306:3306"]
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      retries: 30
+  search:
+    image: opensearchproject/opensearch:2.19.1
+    environment:
+      discovery.type: single-node
+      DISABLE_SECURITY_PLUGIN: "true"
+      DISABLE_INSTALL_DEMO_CONFIG: "true"
+      OPENSEARCH_JAVA_OPTS: -Xms512m -Xmx512m
+    ports: ["127.0.0.1:39200:9200"]

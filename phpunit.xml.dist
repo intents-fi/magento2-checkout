@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  The pure-logic suite: signature, key mode, amounts, currency, invoice plan, the event to order
+  decision, the out-of-order guard and idempotency. Nothing here loads Magento.
+
+    bin/run-phpunit.sh
+-->
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="dev/phpunit/vendor/phpunit/phpunit/phpunit.xsd"
+    bootstrap="dev/phpunit/vendor/autoload.php"
+    colors="true"
+    failOnRisky="true"
+    failOnWarning="true"
+    failOnDeprecation="true"
+    failOnNotice="true"
+>
+    <testsuites>
+        <testsuite name="IntentsFi_Checkout">
+            <directory suffix="Test.php">Test/Unit</directory>
+        </testsuite>
+    </testsuites>
+    <source>
+        <include>
+            <file>Model/Signature.php</file>
+            <file>Model/KeyMode.php</file>
+            <file>Model/Amount.php</file>
+            <file>Model/CurrencySupport.php</file>
+            <file>Model/InvoicePlan.php</file>
+            <file>Model/SettlementAsset.php</file>
+            <directory>Model/Webhook</directory>
+            <directory>Model/Api</directory>
+        </include>
+        <exclude>
+            <file>Model/Webhook/MagentoOrderPort.php</file>
+            <file>Model/Webhook/DbEventLedger.php</file>
+            <file>Model/Webhook/Notes.php</file>
+            <file>Model/Api/CurlTransport.php</file>
+        </exclude>
+    </source>
+</phpunit>

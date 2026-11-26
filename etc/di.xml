@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<!--
+  The payment method is a Magento\Payment\Model\Method\Adapter facade, configured with virtual
+  types: the current pattern in Adobe's payment-gateway docs, rather than the deprecated
+  AbstractMethod.
+
+  It is an offsite method: `can_initialize` makes Magento run the `initialize` command when the
+  order is placed, which only parks the order at pending_payment. The invoice is created and the
+  customer redirected by Controller/Checkout/Redirect, and the order is invoiced only by a signed
+  invoice.paid webhook (Controller/Webhook/Index).
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!-- Facade -->
+    <virtualType name="IntentsFiCheckoutFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">IntentsFi\Checkout\Model\Config::METHOD_CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Magento\Payment\Block\ConfigurableInfo</argument>
+            <argument name="valueHandlerPool" xsi:type="object">IntentsFiCheckoutValueHandlerPool</argument>
+            <argument name="validatorPool" xsi:type="object">IntentsFiCheckoutValidatorPool</argument>
+            <argument name="commandPool" xsi:type="object">IntentsFiCheckoutCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Configuration reader: payment/intentsfi_checkout/* -->
+    <virtualType name="IntentsFiCheckoutGatewayConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">IntentsFi\Checkout\Model\Config::METHOD_CODE</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="IntentsFiCheckoutConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">IntentsFiCheckoutGatewayConfig</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="IntentsFiCheckoutValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">IntentsFiCheckoutConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Validators: the Adapter asks `currency` (base currency) and `country` by name. The
+         charge currency and the API key are checked by Observer/RestrictAvailability. -->
+    <virtualType name="IntentsFiCheckoutCountryValidator" type="Magento\Payment\Gateway\Validator\CountryValidator">
+        <arguments>
+            <argument name="config" xsi:type="object">IntentsFiCheckoutGatewayConfig</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="IntentsFiCheckoutValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="currency" xsi:type="string">IntentsFi\Checkout\Gateway\Validator\CurrencyValidator</item>
+                <item name="country" xsi:type="string">IntentsFiCheckoutCountryValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Commands -->
+    <virtualType name="IntentsFiCheckoutCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="initialize" xsi:type="string">IntentsFi\Checkout\Gateway\Command\InitializeCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Logging to var/log/intentsfi_checkout.log. Keys and secrets are never written. -->
+    <virtualType name="IntentsFiCheckoutLogHandler" type="Magento\Framework\Logger\Handler\Base">
+        <arguments>
+            <argument name="fileName" xsi:type="string">/var/log/intentsfi_checkout.log</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="IntentsFiCheckoutLogger" type="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="name" xsi:type="string">intentsfi_checkout</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">IntentsFiCheckoutLogHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="IntentsFi\Checkout\Model\InvoiceManager">
+        <arguments>
+            <argument name="logger" xsi:type="object">IntentsFiCheckoutLogger</argument>
+        </arguments>
+    </type>
+    <type name="IntentsFi\Checkout\Model\ClientFactory">
+        <arguments>
+            <argument name="logger" xsi:type="object">IntentsFiCheckoutLogger</argument>
+        </arguments>
+    </type>
+    <type name="IntentsFi\Checkout\Controller\Webhook\Index">
+        <arguments>
+            <argument name="logger" xsi:type="object">IntentsFiCheckoutLogger</argument>
+        </arguments>
+    </type>
+    <type name="IntentsFi\Checkout\Model\Webhook\MagentoOrderPort">
+        <arguments>
+            <argument name="logger" xsi:type="object">IntentsFiCheckoutLogger</argument>
+        </arguments>
+    </type>
+    <type name="IntentsFi\Checkout\Observer\CancelInvoiceOnOrderCancel">
+        <arguments>
+            <argument name="logger" xsi:type="object">IntentsFiCheckoutLogger</argument>
+        </arguments>
+    </type>
+
+    <!-- The two secrets are encrypted at rest and must never be exported by app:config:dump. -->
+    <type name="Magento\Config\Model\Config\TypePool">
+        <arguments>
+            <argument name="sensitive" xsi:type="array">
+                <item name="payment/intentsfi_checkout/api_key" xsi:type="string">1</item>
+                <item name="payment/intentsfi_checkout/webhook_secret" xsi:type="string">1</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

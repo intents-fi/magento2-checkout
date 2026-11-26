@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="payment">
+            <group id="intentsfi_checkout" translate="label comment" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Intents Checkout</label>
+                <comment><![CDATA[Let customers pay with the crypto they already hold, and receive one stablecoin in your own wallet. Non-custodial: intents.fi never holds your funds. Questions: <a href="mailto:support@intents.fi">support@intents.fi</a>.]]></comment>
+
+                <field id="currency_notice" translate="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Store currency</label>
+                    <frontend_model>IntentsFi\Checkout\Block\Adminhtml\System\Config\CurrencyNotice</frontend_model>
+                </field>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/intentsfi_checkout/active</config_path>
+                </field>
+                <field id="title" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Title</label>
+                    <comment>What the customer sees at checkout.</comment>
+                    <config_path>payment/intentsfi_checkout/title</config_path>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="connect" translate="label" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>intents.fi account</label>
+                    <frontend_model>IntentsFi\Checkout\Block\Adminhtml\System\Config\Connect</frontend_model>
+                </field>
+                <field id="manual_keys" translate="label comment" sortOrder="29" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enter keys manually</label>
+                    <comment>Not needed if you used Connect intents.fi: it fills these in for you.</comment>
+                    <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+                </field>
+                <field id="api_key" translate="label comment" type="obscure" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>API key</label>
+                    <comment><![CDATA[Your secret key from the intents.fi dashboard. <code>ik_test_…</code> runs in test mode and never moves real funds; <code>ik_live_…</code> takes real payments. The mode is read from the prefix.]]></comment>
+                    <config_path>payment/intentsfi_checkout/api_key</config_path>
+                    <backend_model>IntentsFi\Checkout\Model\Config\Backend\ApiKey</backend_model>
+                </field>
+                <field id="webhook_secret" translate="label comment" type="obscure" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Webhook secret</label>
+                    <comment><![CDATA[The <code>whsec_…</code> secret shown when you add the webhook URL below to the same key. Orders are only marked paid by webhooks signed with it.]]></comment>
+                    <config_path>payment/intentsfi_checkout/webhook_secret</config_path>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="webhook_url" translate="label" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Webhook URL</label>
+                    <frontend_model>IntentsFi\Checkout\Block\Adminhtml\System\Config\WebhookUrl</frontend_model>
+                </field>
+                <field id="mode" translate="label" sortOrder="27" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Mode</label>
+                    <frontend_model>IntentsFi\Checkout\Block\Adminhtml\System\Config\DetectedMode</frontend_model>
+                </field>
+                <field id="test_connection" translate="label" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Connection</label>
+                    <frontend_model>IntentsFi\Checkout\Block\Adminhtml\System\Config\TestConnection</frontend_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from applicable countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                    <config_path>payment/intentsfi_checkout/allowspecific</config_path>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="71" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from specific countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                    <config_path>payment/intentsfi_checkout/specificcountry</config_path>
+                    <depends>
+                        <field id="allowspecific">1</field>
+                    </depends>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Sort order</label>
+                    <config_path>payment/intentsfi_checkout/sort_order</config_path>
+                    <validate>validate-number</validate>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

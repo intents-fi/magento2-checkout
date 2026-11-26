@@ -1,0 +1,26 @@
+<?php
+/** @var \IntentsFi\Checkout\Block\Adminhtml\System\Config\TestConnection $block */
+/** @var \Magento\Framework\Escaper $escaper */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+?>
+<button type="button" class="action-default" id="intentsfi-checkout-test-connection">
+    <span><?= $escaper->escapeHtml(__('Test connection')) ?></span>
+</button>
+<span id="intentsfi-checkout-test-result" aria-live="polite"></span>
+<p class="note"><span><?= $escaper->escapeHtml(__('Checks the saved key and shows the merchant, mode and settlement wallet it belongs to. Save your changes first.')) ?></span></p>
+<?php
+$url = $escaper->escapeJs($block->getAjaxUrl());
+$checking = $escaper->escapeJs((string) __('Checking…'));
+$failed = $escaper->escapeJs((string) __('Could not run the check.'));
+$script = <<<JS
+require(['jquery'], function ($) {
+    $('#intentsfi-checkout-test-connection').on('click', function () {
+        var out = $('#intentsfi-checkout-test-result').text('{$checking}');
+        $.ajax({ url: '{$url}', type: 'POST', dataType: 'json', data: { form_key: window.FORM_KEY } })
+            .done(function (r) { out.text((r && r.ok ? '✓ ' : '✗ ') + ((r && r.message) || '')); })
+            .fail(function () { out.text('✗ {$failed}'); });
+    });
+});
+JS;
+?>
+<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $script, false) ?>

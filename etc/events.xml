@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <!-- An order canceled in Magento closes its intents.fi invoice, so nobody can pay it. -->
+    <event name="order_cancel_after">
+        <observer name="intentsfi_checkout_cancel_invoice" instance="IntentsFi\Checkout\Observer\CancelInvoiceOnOrderCancel"/>
+    </event>
+    <!-- Hide the method without a usable key, or for a cart not in USD. -->
+    <event name="payment_method_is_active">
+        <observer name="intentsfi_checkout_restrict_availability" instance="IntentsFi\Checkout\Observer\RestrictAvailability"/>
+    </event>
+</config>
