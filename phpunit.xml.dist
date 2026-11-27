@@ -28,6 +28,7 @@
             <file>Model/CurrencySupport.php</file>
             <file>Model/InvoicePlan.php</file>
             <file>Model/SettlementAsset.php</file>
+            <file>Model/Affiliate.php</file>
             <directory>Model/Webhook</directory>
             <directory>Model/Api</directory>
         </include>

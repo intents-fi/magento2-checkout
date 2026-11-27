@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace IntentsFi\Checkout\Controller\Adminhtml\System;
 
+use IntentsFi\Checkout\Model\Affiliate;
 use IntentsFi\Checkout\Model\Api\ApiException;
 use IntentsFi\Checkout\Model\ClientFactory;
 use IntentsFi\Checkout\Model\Config;
@@ -14,7 +15,8 @@ use Magento\Framework\Controller\Result\JsonFactory;
 
 /**
  * "Test connection": calls `GET /v0/merchant` with the saved key for the scope being edited and
- * reports the merchant, mode and settlement wallet it belongs to. Never echoes the key.
+ * reports the merchant, mode and settlement wallet it belongs to, and the affiliate that referred
+ * it when Intents names one (`affiliate.displayName`). Never echoes the key.
  */
 class TestConnection extends Action implements HttpPostActionInterface
 {
@@ -59,6 +61,10 @@ class TestConnection extends Action implements HttpPostActionInterface
             $parts[] = (string) __('settles to %1', $settlement['address']);
         } else {
             $parts[] = (string) __('no settlement wallet set yet: add one in your Intents dashboard');
+        }
+        $referredBy = Affiliate::referredBy($merchant);
+        if ($referredBy !== null) {
+            $parts[] = (string) __('Referred by %1', $referredBy);
         }
         return $json->setData(['ok' => true, 'message' => implode(' · ', $parts)]);
     }

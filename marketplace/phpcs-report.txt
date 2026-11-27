@@ -1,111 +1,115 @@
-Magento Coding Standard on intentsfi-magento2-1.0.3.zip, run by bin/phpcs.sh on 2026-11-26 with
---ignore-annotations (as Adobe's EQP runs it: phpcs:ignore comments are not honoured).
-  magento/magento-coding-standard 25 (phpcs 3.13.6), severity 10 (the Marketplace gate): 0 errors, 0 warnings.
-  magento/magento-coding-standard 40 (phpcs 3.13.6), severity 10 (the Marketplace gate): 0 errors, 0 warnings.
-All severities (v40): 0 errors; warnings by file below. 542 of them are formatting in
-Lib/ConnectProtocol.php, generated from the WordPress-style Connect protocol that every Intents
-store plugin shares (not forked, so not reformatted here).
+Magento Coding Standard (magento/magento-coding-standard v40, phpcs 3.13), run on intentsfi-magento2-1.1.0.zip
+by bin/phpcs.sh on 2026-11-26. Severity 10 (the Marketplace gate): 0 errors, 0 warnings.
+All severities: 0 errors; warnings by file below. 685 of them are formatting in lib/connect/class-connect-protocol.php,
+the WordPress-style Connect protocol shared by every Intents store plugin (not forked, so not reformatted here).
 
 PHP CODE SNIFFER REPORT SUMMARY
----------------------------------------------------------------------------------
-FILE                                                             ERRORS  WARNINGS
----------------------------------------------------------------------------------
-Block/Adminhtml/System/Config/Connect.php                        0       20
-Block/Adminhtml/System/Config/CurrencyNotice.php                 0       3
-Block/Adminhtml/System/Config/DetectedMode.php                   0       2
-Block/Adminhtml/System/Config/TestConnection.php                 0       4
-Block/Adminhtml/System/Config/WebhookUrl.php                     0       5
-Controller/Adminhtml/Connect/AbstractConnect.php                 0       4
-Controller/Adminhtml/Connect/Callback.php                        0       2
-Controller/Adminhtml/Connect/Disconnect.php                      0       1
-Controller/Adminhtml/Connect/Start.php                           0       1
-Controller/Adminhtml/System/TestConnection.php                   0       5
-Controller/Checkout/Cancel.php                                   0       4
-Controller/Checkout/Redirect.php                                 0       4
-Controller/Checkout/Success.php                                  0       2
-Controller/Connect/Back.php                                      0       3
-Controller/Webhook/Index.php                                     0       4
-Gateway/Command/InitializeCommand.php                            0       1
-Gateway/Validator/CurrencyValidator.php                          0       1
-Lib/ConnectProtocol.php                                          0       542
-Model/Amount.php                                                 0       7
-Model/ClientFactory.php                                          0       3
-Model/Config.php                                                 0       10
-Model/CurrencySupport.php                                        0       3
-Model/InvoiceManager.php                                         0       29
-Model/InvoicePlan.php                                            0       21
-Model/KeyMode.php                                                0       6
-Model/PaymentInfo.php                                            0       3
-Model/SettlementAsset.php                                        0       8
-Model/Signature.php                                              0       8
-Model/Api/ApiException.php                                       0       3
-Model/Api/Client.php                                             0       22
-Model/Api/CurlTransport.php                                      0       3
-Model/Api/TransportInterface.php                                 0       4
-Model/Config/Backend/ApiKey.php                                  0       1
-Model/Connect/CachePendingStore.php                              0       9
-Model/Connect/ConnectFlow.php                                    0       27
-Model/Connect/FlowProvider.php                                   0       4
-Model/Connect/PendingStoreInterface.php                          0       8
-Model/Connect/ScopeSettings.php                                  0       10
-Model/Connect/SettingsInterface.php                              0       7
-Model/Connect/StoreUrls.php                                      0       7
-Model/Ui/ConfigProvider.php                                      0       2
-Model/Webhook/DbEventLedger.php                                  0       2
-Model/Webhook/Decision.php                                       0       1
-Model/Webhook/EventLedgerInterface.php                           0       1
-Model/Webhook/MagentoOrderPort.php                               0       20
-Model/Webhook/Notes.php                                          0       26
-Model/Webhook/OrderAction.php                                    0       11
-Model/Webhook/OrderPortInterface.php                             0       8
-Model/Webhook/OrderState.php                                     0       3
-Model/Webhook/Processor.php                                      0       6
-Model/Webhook/Result.php                                         0       2
-Observer/CancelInvoiceOnOrderCancel.php                          0       5
-Observer/RestrictAvailability.php                                0       2
-Setup/Uninstall.php                                              0       1
-view/adminhtml/templates/system/config/connect.phtml             0       7
-view/adminhtml/templates/system/config/test-connection.phtml     0       1
----------------------------------------------------------------------------------
-A TOTAL OF 0 ERRORS AND 909 WARNINGS WERE FOUND IN 56 FILES
----------------------------------------------------------------------------------
-PHPCBF CAN FIX 521 OF THESE SNIFF VIOLATIONS AUTOMATICALLY
----------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+FILE                                                            ERRORS  WARNINGS
+--------------------------------------------------------------------------------
+Block/Adminhtml/System/Config/Connect.php                       0       20
+Block/Adminhtml/System/Config/CurrencyNotice.php                0       3
+Block/Adminhtml/System/Config/DetectedMode.php                  0       2
+Block/Adminhtml/System/Config/TestConnection.php                0       4
+Block/Adminhtml/System/Config/WebhookUrl.php                    0       5
+Controller/Adminhtml/Connect/AbstractConnect.php                0       4
+Controller/Adminhtml/Connect/Callback.php                       0       2
+Controller/Adminhtml/Connect/Disconnect.php                     0       1
+Controller/Adminhtml/Connect/Start.php                          0       1
+Controller/Adminhtml/System/TestConnection.php                  0       5
+Controller/Checkout/Cancel.php                                  0       4
+Controller/Checkout/Redirect.php                                0       4
+Controller/Checkout/Success.php                                 0       2
+Controller/Connect/Back.php                                     0       3
+Controller/Webhook/Index.php                                    0       4
+Gateway/Command/InitializeCommand.php                           0       1
+Gateway/Validator/CurrencyValidator.php                         0       1
+lib/connect/class-connect-protocol.php                          0       685
+Model/Affiliate.php                                             0       12
+Model/Amount.php                                                0       7
+Model/ClientFactory.php                                         0       3
+Model/Config.php                                                0       14
+Model/CurrencySupport.php                                       0       3
+Model/InvoiceManager.php                                        0       28
+Model/InvoicePlan.php                                           0       21
+Model/KeyMode.php                                               0       6
+Model/PaymentInfo.php                                           0       3
+Model/SettlementAsset.php                                       0       8
+Model/Signature.php                                             0       8
+Model/Api/ApiException.php                                      0       3
+Model/Api/Client.php                                            0       22
+Model/Api/CurlTransport.php                                     0       3
+Model/Api/TransportInterface.php                                0       4
+Model/Config/Backend/ApiKey.php                                 0       1
+Model/Connect/CachePendingStore.php                             0       9
+Model/Connect/ConnectFlow.php                                   0       28
+Model/Connect/FlowProvider.php                                  0       6
+Model/Connect/PendingStoreInterface.php                         0       8
+Model/Connect/Protocol.php                                      0       2
+Model/Connect/ScopeSettings.php                                 0       10
+Model/Connect/SettingsInterface.php                             0       7
+Model/Connect/StoreUrls.php                                     0       7
+Model/Ui/ConfigProvider.php                                     0       2
+Model/Webhook/DbEventLedger.php                                 0       2
+Model/Webhook/Decision.php                                      0       1
+Model/Webhook/EventLedgerInterface.php                          0       1
+Model/Webhook/MagentoOrderPort.php                              0       20
+Model/Webhook/Notes.php                                         0       26
+Model/Webhook/OrderAction.php                                   0       11
+Model/Webhook/OrderPortInterface.php                            0       8
+Model/Webhook/OrderState.php                                    0       3
+Model/Webhook/Processor.php                                     0       6
+Model/Webhook/Result.php                                        0       2
+Observer/CancelInvoiceOnOrderCancel.php                         0       5
+Observer/RestrictAvailability.php                               0       2
+Setup/Uninstall.php                                             0       1
+view/adminhtml/templates/system/config/connect.phtml            0       7
+view/adminhtml/templates/system/config/test-connection.phtml    0       1
+--------------------------------------------------------------------------------
+A TOTAL OF 0 ERRORS AND 1072 WARNINGS WERE FOUND IN 58 FILES
+--------------------------------------------------------------------------------
+PHPCBF CAN FIX 656 OF THESE SNIFF VIOLATIONS AUTOMATICALLY
+--------------------------------------------------------------------------------
 
-Time: 3.17 secs; Memory: 20MB
+Time: 2.84 secs; Memory: 20MB
+
 
 
 PHP CODE SNIFFER VIOLATION SOURCE SUMMARY
 ---------------------------------------------------------------------------------------------------
     STANDARD  CATEGORY            SNIFF                                                       COUNT
 ---------------------------------------------------------------------------------------------------
-[x] Generic   White space         Disallow tab indent tabs used                               213
-[ ] Magento2  Annotation          Method annotation structure no comment block                110
-[ ] Generic   Files               Line length too long                                        91
-[x] Generic   White space         Scope indent incorrect                                      85
-[ ] Magento2  Annotation          Method annotation structure method annotation               55
-[x] PSR2      Methods             Function call signature space after open bracket            52
-[x] PSR2      Methods             Function call signature space before close bracket          52
-[x] Generic   White space         Scope indent incorrect exact                                49
-[ ] Magento2  Annotation          Method arguments param missing                              49
-[ ] Magento2  Functions           Static function static function                             34
-[ ] Magento2  Annotation          Method arguments argument missing                           28
-[x] PSR2      Control structures  Control structure spacing space before close brace          14
-[x] PSR2      Control structures  Control structure spacing spacing after open brace          14
-[x] Generic   Arrays              Disallow long array syntax found                            13
-[x] Squiz     Functions           Multi line function declaration brace on same line          10
-[x] Squiz     Functions           Function declaration argument spacing spacing after open    9
-[x] Squiz     Functions           Function declaration argument spacing spacing before close  9
+[x] Generic   White space         Disallow tab indent tabs used                               274
+[ ] Magento2  Annotation          Method annotation structure no comment block                111
+[x] Generic   White space         Scope indent incorrect                                      99
+[ ] Generic   Files               Line length too long                                        92
+[x] Generic   White space         Scope indent incorrect exact                                66
+[x] PSR2      Methods             Function call signature space after open bracket            64
+[x] PSR2      Methods             Function call signature space before close bracket          64
+[ ] Magento2  Annotation          Method annotation structure method annotation               60
+[ ] Magento2  Annotation          Method arguments param missing                              55
+[ ] Magento2  Functions           Static function static function                             41
+[ ] Magento2  Annotation          Method arguments argument missing                           31
+[x] PSR2      Control structures  Control structure spacing space before close brace          18
+[x] PSR2      Control structures  Control structure spacing spacing after open brace          18
+[x] Generic   Arrays              Disallow long array syntax found                            15
+[x] Squiz     Functions           Multi line function declaration brace on same line          13
+[x] Squiz     Functions           Function declaration argument spacing spacing after open    12
+[x] Squiz     Functions           Function declaration argument spacing spacing before close  12
+[ ] PSR1      Methods             Camel caps method name not camel caps                       9
 [ ] Magento2  Annotation          Method arguments visual alignment                           7
-[ ] PSR1      Methods             Camel caps method name not camel caps                       6
-[ ] Magento2  Annotation          Method arguments param order                                3
+[ ] Magento2  Annotation          Method arguments param order                                4
 [ ] Magento2  Commenting          Class property PHPDoc formatting missing                    2
 [ ] Magento2  Annotation          Method arguments duplicate param                            1
 [ ] Magento2  Exceptions          Throw catch throw catch                                     1
 [ ] Magento2  Performance         Foreach array merge foreach array merge                     1
 [x] PSR2      Classes             Class declaration open brace new line                       1
+[ ] Squiz     Classes             Valid class name not camel caps                             1
 ---------------------------------------------------------------------------------------------------
-A TOTAL OF 909 SNIFF VIOLATIONS WERE FOUND IN 25 SOURCES
+A TOTAL OF 1072 SNIFF VIOLATIONS WERE FOUND IN 26 SOURCES
 ---------------------------------------------------------------------------------------------------
-PHPCBF CAN FIX THE 12 MARKED SOURCES AUTOMATICALLY (521 VIOLATIONS IN TOTAL)
+PHPCBF CAN FIX THE 12 MARKED SOURCES AUTOMATICALLY (656 VIOLATIONS IN TOTAL)
 ---------------------------------------------------------------------------------------------------
+
+Time: 2.81 secs; Memory: 20MB
+

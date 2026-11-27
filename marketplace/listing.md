@@ -11,7 +11,7 @@ Intents Checkout – Crypto Payments for Magento 2
 (`brand/LISTING-KIT.md`. The platform brief suggested "… for Magento 2 / Adobe Commerce"; the kit's
 pattern puts one platform trademark last. Never rename a listing during review.)
 
-Package: `intents/module-checkout` (Composer; replaces `intentsfi/module-checkout`) · module `IntentsFi_Checkout` · publisher **Intents** ·
+Package: `intentsfi/module-checkout` (Composer) · module `IntentsFi_Checkout` · publisher **Intents** ·
 https://intents.fi/integrations/magento
 
 ## Short description
@@ -55,6 +55,7 @@ payment page, and the funds go straight to your wallet: Intents never holds them
 - Underpayments go on hold with what is still owed; late payments are never invoiced automatically
 - Light and dark hosted checkout, with the order total first
 - Per-website keys, stored encrypted
+- Optional affiliate ID, for agencies and developers who set up your checkout
 
 ### Requirements
 
@@ -76,7 +77,9 @@ customer to `pay.intents.fi` to pay. Data sent: order id, amount, currency, retu
 customer's email (for their receipt). When you press **Connect to Intents** or **Go live**, your
 browser goes to `dashboard.intents.fi` with your store address; the extension then exchanges a
 one-time code for your keys, registers your store's webhook address, and revokes the keys on
-**Disconnect**. Terms: https://intents.fi/terms · Privacy: https://intents.fi/privacy.
+**Disconnect**. If you enter an optional affiliate ID, it is sent as `ref` with Connect and in an
+`X-Intents-Affiliate` header when an invoice is created, and `GET /v0/ref/resolve` on
+`api.intents.fi` receives only the affiliate ID, on settings save, to show who it belongs to. Terms: https://intents.fi/terms · Privacy: https://intents.fi/privacy.
 
 ### Support
 
@@ -97,7 +100,7 @@ payment costs 2 cents. The extension is free, and test mode is free.
 page only offers what can be filled for the order amount at that moment.
 
 **What do I receive?**
-One asset that you choose: USDC or USDT on a supported network, whatever the customer paid with.
+One asset that you choose: USDC or USDT on a supported network, or native BTC, ETH or SOL, whatever the customer paid with.
 
 **When is an order marked paid?**
 Only when Intents confirms that your funds have been delivered. The order is then invoiced and
@@ -119,20 +122,20 @@ extension's settings.
 **Does it work with Hyvä Checkout or a headless storefront?**
 Not yet: it supports the standard Luma-based checkout.
 
+**What is the Affiliate ID field?**
+If an agency or developer set up your checkout, they may give you their Intents affiliate ID to
+paste there. It's optional, it doesn't change your fee, and it only applies before your store's
+first live payment.
+
 **Where do I get help?**
 Email support@intents.fi (support is by email only), or read https://intents.fi/docs.
 
 ## Changelog
 
-### 1.0.3
+### 1.1.0
 
-* The Connect protocol loads without a file include (it is now a class in the module's own
-  namespace), so the extension passes the Marketplace code check. No behaviour change.
-
-### 1.0.2
-
-* The Composer package is now `intents/module-checkout` (it replaces `intentsfi/module-checkout`).
-  No code changes.
+* Optional affiliate ID for agencies and developers who set up your checkout.
+* Ready for settlement in ETH or SOL as well as stablecoins and BTC: order comments show the amount that reached your wallet as, for example, "0.0215 ETH on Base". Choose your settlement asset and wallet in the Intents dashboard.
 
 ### 1.0.1
 
@@ -157,35 +160,36 @@ Email support@intents.fi (support is by email only), or read https://intents.fi/
 
 ## Tested versions
 
-Run on 2026-11-26 in Docker, all on 1.0.3 (`intentsfi-magento2-1.0.3.zip`,
-sha256 9cae91069d57b7e3c38ddca0535aacdce809988ebcdd314e20b0194b3a82d719). Every row is a fresh
-`setup:install`, then the module installed, `setup:upgrade`, `setup:di:compile` (production mode:
-`deploy:mode:set production`, which also deploys static content), the checks below, and removal.
+Run on 2026-11-26 in Docker. Every row: install, `setup:upgrade`, `setup:di:compile`, the
+test-mode checks below, and removal. 1.1.0 (the optional affiliate ID) was run on 2.4.8-p5 with
+PHP 8.3 (first row). The 2.4.9 rows on PHP 8.4 and 8.5 were run on 1.0.1; the others on 1.0.0,
+whose code differs only in its screen text and version number.
 
 | Magento Open Source | PHP | Install | Mode | Database | Search |
 |---|---|---|---|---|---|
-| 2.4.9 | 8.3.37, 8.4.28, 8.5.13 | zip in `app/code` | developer | MariaDB 12.3.3 | OpenSearch 3.10.1 |
-| 2.4.9 | 8.3.37, 8.4.28, 8.5.13 | `composer require intents/module-checkout` from a local copy of the package | production | MariaDB 12.3.3 | OpenSearch 3.10.1 |
-| 2.4.8-p5 | 8.2.36, 8.3.37 | `composer require intents/module-checkout` from a local copy of the package | production | MariaDB 11.4.13 | OpenSearch 3.10.1 |
-| 2.4.7-p10 | 8.2.36, 8.3.37 | `composer require intents/module-checkout` from a local copy of the package | production | MariaDB 10.11.19 | OpenSearch 2.19.1 |
-
-"A local copy of the package" is a Composer artifact repository holding the zip above, which is
-how the Marketplace distributes it; the module then loads from `vendor/intents/module-checkout`.
+| 2.4.8-p5 | 8.3.6 | 1.0.1 zip in `app/code`, upgraded to the 1.1.0 zip; then `composer require` (path repository) and `module:uninstall --remove-data` (1.1.0) | developer | MariaDB 11.4 | OpenSearch 2.19 |
+| 2.4.9 | 8.5.13, 8.4.28 | zip in `app/code` (1.0.1) | developer | MariaDB 12.3 | OpenSearch 3.10.1 |
+| 2.4.7-p10 | 8.2, 8.3 | `composer require` from the mirror repository | production (`setup:static-content:deploy`) | MariaDB 10.6 | OpenSearch 2.19 |
+| 2.4.8-p5 | 8.2, 8.3 | `composer require` from the mirror repository | production | MariaDB 11.4 | OpenSearch 2.19 |
+| 2.4.9 | 8.3 | zip in `app/code` | developer | MariaDB 11.4 | OpenSearch 2.19 |
+| 2.4.7-p9 | 8.3 | zip in `app/code` | developer | MariaDB 10.6 | OpenSearch 2.19 |
 
 Checks on each: Connect, Go live and Disconnect through the admin (against a mock of the Connect
 endpoints); Test connection; a test-mode order against api.intents.fi paid by a signed webhook
 (invoice created, order Processing, comment "Settled: 9.96 USDC on Base"); a replayed webhook
-creates no second invoice; a forged signature gets 401; `module:disable` + `setup:upgrade` leave
-the storefront and admin working. On 2.4.8-p5 (both PHP versions), also
-`module:uninstall --remove-data`: the module's data (its table and every
-`payment/intentsfi_checkout/*` setting) and its registration are removed and the store keeps
-working. Magento's own `composer remove` step at the end of that command could not complete in the
-test environment (it installs the project's dev packages, which need GitHub credentials there), so
-the package was removed with `composer remove --update-no-dev intents/module-checkout` instead.
+creates no second invoice; a forged signature gets 401; `module:disable` + `setup:upgrade` (and,
+on 2.4.8-p5, `module:uninstall --remove-data`) leave the store working.
 
-The pure-logic PHPUnit suite (`bin/run-phpunit.sh`, 106 tests) passes on PHP 8.2, 8.3, 8.4 and 8.5.
-`bin/phpcs.sh`: Magento Coding Standard v25 and v40, severity 10, with `--ignore-annotations`:
-0 errors, 0 warnings.
+1.1.0 on 2.4.8-p5 also: settings saved on 1.0.1 are kept by the upgrade; Connect, Go live,
+Disconnect and Test connection pass again; the Affiliate ID field lowercases a valid ID and shows
+"Linked to …", warns on an unknown ID or an unreachable API and still saves, refuses an invalid ID
+and keeps the old one; the Connect link carries `ref` only when an ID is set; Test connection shows
+"Referred by …"; invoice create sends `X-Intents-Affiliate` only when an ID is set (all against the
+mock, `dev/magento/affiliate-smoke.sh`); `module:uninstall --remove-data` removes the ID with the
+other settings. Not run on 1.1.0: a test-mode order against api.intents.fi.
+
+The pure-logic PHPUnit suite (`bin/run-phpunit.sh`) passes on PHP 8.3 with 1.1.0 (113 tests);
+on 1.0.1 (104 tests) it also passed on PHP 8.4 and 8.5.
 
 Not run: Adobe Commerce (on-premises or cloud); PHP 8.4 and 8.5 on 2.4.7 or 2.4.8. `composer.json`
 requires PHP 8.2, 8.3, 8.4 or 8.5 (`~8.2.0||~8.3.0||~8.4.0||~8.5.0`) and `magento/framework`
@@ -195,5 +199,5 @@ requires PHP 8.2, 8.3, 8.4 or 8.5 (`~8.2.0||~8.3.0||~8.4.0||~8.5.0`) and `magent
 
 Nothing in the package is compiled, minified or obfuscated: the PHP, `.phtml` templates, Knockout
 template and RequireJS files ship as written, with the licence (`LICENSE`, MIT). The one use of
-`base64_encode`, in `Lib/ConnectProtocol.php`, builds the base64url PKCE challenge
+`base64_encode`, in `lib/connect/class-connect-protocol.php`, builds the base64url PKCE challenge
 and random state values required by RFC 7636, and is commented as such.

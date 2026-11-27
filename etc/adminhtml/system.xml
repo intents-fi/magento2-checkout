@@ -4,7 +4,7 @@
         <section id="payment">
             <group id="intentsfi_checkout" translate="label comment" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0">
                 <label>Intents Checkout</label>
-                <comment><![CDATA[Let customers pay with the crypto they already hold, and receive one stablecoin in your own wallet. Non-custodial: Intents never holds your funds. Questions: <a href="mailto:support@intents.fi">support@intents.fi</a>.]]></comment>
+                <comment><![CDATA[Let customers pay with the crypto they already hold, and receive one asset (a stablecoin, BTC, ETH or SOL) in your own wallet. Non-custodial: Intents never holds your funds. Questions: <a href="mailto:support@intents.fi">support@intents.fi</a>.]]></comment>
 
                 <field id="currency_notice" translate="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Store currency</label>
@@ -53,6 +53,12 @@
                 <field id="test_connection" translate="label" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Connection</label>
                     <frontend_model>IntentsFi\Checkout\Block\Adminhtml\System\Config\TestConnection</frontend_model>
+                </field>
+                <field id="affiliate_id" translate="label comment" type="text" sortOrder="65" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Affiliate ID (optional)</label>
+                    <comment>Set up by an agency or developer? Paste their Intents affiliate ID. It doesn't change your fee. It only applies before your store's first live payment.</comment>
+                    <config_path>payment/intentsfi_checkout/affiliate_id</config_path>
+                    <backend_model>IntentsFi\Checkout\Model\Config\Backend\AffiliateId</backend_model>
                 </field>
                 <field id="allowspecific" translate="label" type="allowspecific" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                     <label>Payment from applicable countries</label>

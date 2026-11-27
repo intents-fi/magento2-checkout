@@ -6,6 +6,8 @@ declare(strict_types=1);
 
 namespace IntentsFi\Checkout\Model\Api;
 
+use IntentsFi\Checkout\Model\Affiliate;
+
 /**
  * The only code in this module that talks to intents.fi. Mirrors the WooCommerce plugin's
  * `Api_Client` (plugins/woocommerce/includes/class-api-client.php): the same calls, the same
@@ -34,10 +36,14 @@ class Client
         return $this->request('GET', '/v0/merchant');
     }
 
-    /** `POST /v0/invoices`: create an invoice, or get back the one this `reference` already made. */
-    public function createInvoice(array $body): array
+    /**
+     * `POST /v0/invoices`: create an invoice, or get back the one this `reference` already made.
+     * With an affiliate ID set, it goes along as `X-Intents-Affiliate`; Intents decides what it
+     * does with it, and nothing here depends on the answer.
+     */
+    public function createInvoice(array $body, string $affiliateId = ''): array
     {
-        return $this->request('POST', '/v0/invoices', $body);
+        return $this->request('POST', '/v0/invoices', $body, true, Affiliate::headers($affiliateId));
     }
 
     /** `GET /v0/invoices/{id}`. */
@@ -83,10 +89,18 @@ class Client
         return $this->request('POST', '/v0/connect/token', $body, false);
     }
 
-    /** @return array<string, mixed> */
-    private function request(string $method, string $path, ?array $body = null, bool $authed = true): array
-    {
-        $headers = [
+    /**
+     * @param array<string, string> $extraHeaders
+     * @return array<string, mixed>
+     */
+    private function request(
+        string $method,
+        string $path,
+        ?array $body = null,
+        bool $authed = true,
+        array $extraHeaders = []
+    ): array {
+        $headers = $extraHeaders + [
             'Accept' => 'application/json',
             'User-Agent' => $this->userAgent,
         ];

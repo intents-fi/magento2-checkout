@@ -1,26 +1,18 @@
 # Release notes: Intents Checkout for Magento
 
-## 1.0.3
+## 1.1.0
 
 **Compatibility:** see "Tested versions" in `listing.md`. Luma-based checkout.
 
-- The Connect protocol now loads without a file include: it is a class in the module's own
-  namespace (`IntentsFi\Checkout\Lib\ConnectProtocol`), found by the autoloader whether the
-  module is installed with Composer or unzipped into `app/code`. This passes the Adobe Commerce
-  Marketplace code check, which refused the `require_once` 1.0.2 used.
-- No behaviour change: Connect, payments, webhooks, settings, keys and orders work as before.
-  Nothing to reconfigure.
-
-## 1.0.2
-
-**Compatibility:** see "Tested versions" in `listing.md`. Luma-based checkout.
-
-- The Composer package is now `intents/module-checkout`, so it matches the Intents vendor name
-  on the Adobe Commerce Marketplace. Install with `composer require intents/module-checkout`.
-  It replaces `intentsfi/module-checkout`: a store on 1.0.1 runs
-  `composer remove intentsfi/module-checkout && composer require intents/module-checkout`, then
-  `bin/magento setup:upgrade`. Settings, keys and orders are unchanged.
-- No other changes: the code is the same as 1.0.1.
+- Optional affiliate ID for agencies and developers who set up your checkout. Paste it into
+  **Affiliate ID (optional)** below the keys: it doesn't change your fee, and it only applies
+  before your store's first live payment. Saving it shows who it belongs to ("Linked to …"), and
+  **Test connection** shows "Referred by …" once Intents reports it.
+- Ready for settlement in ETH or SOL as well as stablecoins and BTC: order comments show the
+  amount that reached your wallet as, for example, "0.0215 ETH on Base" or "1.20 SOL on Solana".
+  Choose your settlement asset and wallet in the Intents dashboard.
+- Nothing to reconfigure: settings, keys and orders are kept on upgrade. Run
+  `bin/magento setup:upgrade` after replacing the files, as for any module update.
 
 ## 1.0.1
 

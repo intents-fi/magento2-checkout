@@ -28,6 +28,10 @@ class SettlementAsset
         'eip155:42161/erc20:0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9' => ['USDT', 6, 'Arbitrum'],
         'eip155:56/erc20:0x55d398326f99059fF775485246999027B3197955' => ['USDT', 18, 'BNB Chain'],
         'bip122:000000000019d6689c085ae165831e93/slip44:0' => ['BTC', 8, 'Bitcoin'],
+        'eip155:1/slip44:60' => ['ETH', 18, 'Ethereum'],
+        'eip155:8453/slip44:60' => ['ETH', 18, 'Base'],
+        'eip155:42161/slip44:60' => ['ETH', 18, 'Arbitrum'],
+        'solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp/slip44:501' => ['SOL', 9, 'Solana'],
     ];
 
     /**

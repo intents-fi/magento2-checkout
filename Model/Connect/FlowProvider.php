@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace IntentsFi\Checkout\Model\Connect;
 
 use IntentsFi\Checkout\Model\ClientFactory;
+use IntentsFi\Checkout\Model\Config;
 use Psr\Log\LoggerInterface;
 
 /** Builds {@see ConnectFlow} with Magento's pieces, and the settings of a scope. */
@@ -14,7 +15,8 @@ class FlowProvider
         private readonly ClientFactory $clientFactory,
         private readonly StoreUrls $urls,
         private readonly ScopeSettingsFactory $settingsFactory,
-        private readonly LoggerInterface $logger
+        private readonly LoggerInterface $logger,
+        private readonly Config $config
     ) {
     }
 
@@ -33,6 +35,12 @@ class FlowProvider
     public function settings(?int $websiteId): SettingsInterface
     {
         return $this->settingsFactory->create(['websiteId' => $websiteId]);
+    }
+
+    /** The affiliate ID saved at a scope (null: default), or ''. */
+    public function affiliateId(?int $websiteId): string
+    {
+        return $this->config->affiliateIdForWebsite($websiteId);
     }
 
     public function urls(): StoreUrls

@@ -13,7 +13,7 @@
 set -eu
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
-SRC="${MAGENTO_SRC:-$HERE/src}"
+SRC="$HERE/src"
 BASE="${BASE:-http://127.0.0.1:8080}"
 MOCK_PORT="${MOCK_PORT:-8790}"
 MOCK="http://127.0.0.1:$MOCK_PORT"

@@ -5,6 +5,7 @@ namespace IntentsFi\Checkout\Test\Unit\Model\Connect;
 
 use IntentsFi\Checkout\Model\Api\Client;
 use IntentsFi\Checkout\Model\Connect\ConnectFlow;
+use IntentsFi\Checkout\Model\Connect\Protocol;
 use PHPUnit\Framework\TestCase;
 
 require_once __DIR__ . '/Fakes.php';
@@ -76,6 +77,17 @@ final class ConnectFlowTest extends TestCase
         return $this->flow()->finish($query, $user, fn (?int $w) => $this->settings, self::NOW + 60);
     }
 
+    public function testTheModuleCopyOfTheSharedProtocolIsByteIdenticalAndLoaded(): void
+    {
+        Protocol::load();
+        $file = (new \ReflectionClass(\IntentsFi\Connect\Connect_Protocol::class))->getFileName();
+        self::assertSame(realpath(Protocol::FILE), realpath((string) $file));
+        if (!is_file(Protocol::SHARED)) {
+            self::markTestSkipped('Not in the intents.fi repository.');
+        }
+        self::assertFileEquals(Protocol::SHARED, Protocol::FILE, 'Copy plugins/_shared/connect/class-connect-protocol.php into plugins/magento/lib/connect/.');
+    }
+
     public function testStartSendsTheAdminToTheDashboardWithAPkceChallengeAndNoSecret(): void
     {
         $started = $this->start();
@@ -91,7 +103,7 @@ final class ConnectFlowTest extends TestCase
         self::assertSame('test', $q['mode']);
         self::assertSame('S256', $q['code_challenge_method']);
         self::assertSame($pending['state'], $q['state']);
-        self::assertSame(\IntentsFi\Checkout\Lib\ConnectProtocol::challenge($pending['verifier']), $q['code_challenge']);
+        self::assertSame(\IntentsFi\Connect\Connect_Protocol::challenge($pending['verifier']), $q['code_challenge']);
         self::assertStringNotContainsString($pending['verifier'], $url, 'the verifier never leaves the server');
         self::assertSame(self::CALLBACK, $this->pending->returns[$pending['state']]);
     }

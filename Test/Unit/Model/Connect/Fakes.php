@@ -92,6 +92,10 @@ final class ScriptedTransport implements TransportInterface
     public array $script = [];
     /** @var list<array{method: string, path: string, headers: array, body: mixed}> */
     public array $sent = [];
+    /** @var list<string> The full URL of each request, query included. */
+    public array $urls = [];
+    /** @var list<int> */
+    public array $timeouts = [];
 
     public function on(string $method, string $path, int $status, array $body): void
     {
@@ -101,6 +105,8 @@ final class ScriptedTransport implements TransportInterface
     public function send(string $method, string $url, array $headers, ?string $body, int $timeout): array
     {
         $path = (string) parse_url($url, PHP_URL_PATH);
+        $this->urls[] = $url;
+        $this->timeouts[] = $timeout;
         $this->sent[] = ['method' => $method, 'path' => $path, 'headers' => $headers, 'body' => $body === null ? null : json_decode($body, true)];
         $queue = $this->script[$method . ' ' . $path] ?? [];
         if ($queue === []) {

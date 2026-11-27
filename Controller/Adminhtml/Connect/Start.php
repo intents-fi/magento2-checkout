@@ -6,8 +6,9 @@ namespace IntentsFi\Checkout\Controller\Adminhtml\Connect;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 
 /**
- * "Connect intents.fi" (`mode=test`) and "Go live" (`mode=live`): keep a fresh request for this
- * admin and send them to dashboard.intents.fi. The admin URL key is this link's CSRF check.
+ * "Connect to Intents" (`mode=test`) and "Go live" (`mode=live`): keep a fresh request for this
+ * admin and send them to dashboard.intents.fi, with the saved affiliate ID as `ref` if there is
+ * one. The admin URL key is this link's CSRF check.
  */
 class Start extends AbstractConnect implements HttpGetActionInterface
 {
@@ -25,7 +26,8 @@ class Start extends AbstractConnect implements HttpGetActionInterface
             $this->_backendUrl->getUrl('intentsfi_checkout/connect/callback', ['_nosecret' => true]),
             $urls->webhookUrl($websiteId),
             $websiteId,
-            time()
+            time(),
+            $this->provider->affiliateId($websiteId)
         );
         if (!$started['ok']) {
             return $this->back((string) $started['result'], $websiteId);

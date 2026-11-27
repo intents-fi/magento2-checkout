@@ -7,7 +7,10 @@
  *
  * The real dashboard signs the merchant in and asks for consent; here GET /connect approves at
  * once and sends the browser back to return_url with a code. A code from `mode=live` yields live
- * keys. Every request is appended to $CONNECT_MOCK_LOG (one JSON line each) for the smoke to check.
+ * keys. Every request is appended to $CONNECT_MOCK_LOG (one JSON line each, with the
+ * X-Intents-Affiliate header as `affiliate`) for the smokes to check. affiliate-smoke.sh also uses
+ * its `GET /v0/ref/resolve` (`oak-studio` is Oak Studio, `down-for-test` answers 503, anything else
+ * is unknown) and `POST /v0/invoices`.
  * Never point a real store at this.
  */
 declare(strict_types=1);
@@ -17,7 +20,8 @@ $method = $_SERVER['REQUEST_METHOD'];
 $path = (string) parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $body = json_decode((string) file_get_contents('php://input'), true);
 $auth = (string) ($_SERVER['HTTP_AUTHORIZATION'] ?? '');
-file_put_contents($log, json_encode(['method' => $method, 'path' => $path, 'auth' => $auth, 'query' => $_GET, 'body' => $body]) . "\n", FILE_APPEND);
+$affiliate = $_SERVER['HTTP_X_INTENTS_AFFILIATE'] ?? null;
+file_put_contents($log, json_encode(['method' => $method, 'path' => $path, 'auth' => $auth, 'affiliate' => $affiliate, 'query' => $_GET, 'body' => $body]) . "\n", FILE_APPEND);
 
 $json = static function (int $status, array $data): void {
     http_response_code($status);
@@ -65,7 +69,34 @@ if ($method === 'POST' && $path === '/v0/connect/revoke') {
     return;
 }
 if ($method === 'GET' && $path === '/v0/merchant') {
-    $json(200, ['id' => 'mer_mock', 'name' => 'Mock Goods', 'status' => 'active', 'mode' => str_contains($auth, 'ik_live_') ? 'live' : 'test']);
+    $merchant = ['id' => 'mer_mock', 'name' => 'Mock Goods', 'status' => 'active', 'mode' => str_contains($auth, 'ik_live_') ? 'live' : 'test'];
+    if (getenv('CONNECT_MOCK_REFERRED_BY')) {
+        $merchant['affiliate'] = ['displayName' => getenv('CONNECT_MOCK_REFERRED_BY')];
+    }
+    $json(200, $merchant);
+    return;
+}
+if ($method === 'GET' && $path === '/v0/ref/resolve') {
+    $code = (string) ($_GET['code'] ?? '');
+    if ($code === 'down-for-test') {
+        $json(503, ['error' => ['code' => 'UNAVAILABLE', 'message' => 'try later']]);
+        return;
+    }
+    $json(200, $code === 'oak-studio' ? ['valid' => true, 'displayName' => 'Oak Studio'] : ['valid' => false, 'displayName' => null]);
+    return;
+}
+if ($method === 'POST' && $path === '/v0/invoices') {
+    $id = 'inv_mock_' . substr(hash('sha256', (string) ($body['reference'] ?? '')), 0, 16);
+    $json(201, [
+        'id' => $id,
+        'url' => 'https://pay.intents.fi/i/' . $id,
+        'status' => 'pending',
+        'mode' => 'test',
+        'amount' => $body['amount'] ?? '',
+        'currency' => $body['currency'] ?? '',
+        'reference' => $body['reference'] ?? '',
+        'metadata' => $body['metadata'] ?? [],
+    ]);
     return;
 }
 $json(404, ['error' => ['code' => 'NOT_FOUND', 'message' => $method . ' ' . $path]]);

@@ -68,6 +68,7 @@ class InvoiceManager
         }
 
         $client = $this->clientFactory->create($apiKey);
+        $affiliateId = $this->config->affiliateId($storeId);
         $amount = Amount::format((string) $order->getGrandTotal());
 
         $incrementId = (string) $order->getIncrementId();
@@ -108,7 +109,10 @@ class InvoiceManager
 
         try {
             $created = InvoicePlan::createOwned(
-                fn (string $reference): array => $client->createInvoice($this->invoiceBody($order, $amount, $reference)),
+                fn (string $reference): array => $client->createInvoice(
+                    $this->invoiceBody($order, $amount, $reference),
+                    $affiliateId
+                ),
                 $incrementId,
                 $storeKey,
                 $sequence,

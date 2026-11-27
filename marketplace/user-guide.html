@@ -32,8 +32,8 @@
 <body>
 <img class="logo" src="icon-512.png" alt="Intents">
 <h1>Intents Checkout for Magento</h1>
-<p class="lead">User and installation guide · version 1.0.3 · tested on Magento Open Source 2.4.7 and 2.4.8 (PHP 8.2 and 8.3) and 2.4.9 (PHP 8.3, 8.4 and 8.5)</p>
-<p>Intents Checkout adds a <strong>Pay with crypto</strong> payment method to the Magento checkout. Your customer sees the order total first, then pays on the secure Intents payment page with the crypto they already hold. You receive one stablecoin (USDC or USDT on the network you choose) directly in your own wallet. Intents never holds your funds. The fee is 0.4% of each completed payment, for every merchant; test mode is free.</p>
+<p class="lead">User and installation guide · version 1.1.0 · tested on Magento Open Source 2.4.7 and 2.4.8 (PHP 8.2 and 8.3) and 2.4.9 (PHP 8.3, 8.4 and 8.5)</p>
+<p>Intents Checkout adds a <strong>Pay with crypto</strong> payment method to the Magento checkout. Your customer sees the order total first, then pays on the secure Intents payment page with the crypto they already hold. You receive one asset (USDC or USDT on the network you choose, or native BTC, ETH or SOL) directly in your own wallet. Intents never holds your funds. The fee is 0.4% of each completed payment, for every merchant; test mode is free.</p>
 
 <h2>1. Requirements</h2>
 <ul>
@@ -46,7 +46,7 @@
 
 <h2>2. Install</h2>
 <h3>With Composer (Marketplace)</h3>
-<pre>composer require intents/module-checkout
+<pre>composer require intentsfi/module-checkout
 bin/magento module:enable IntentsFi_Checkout
 bin/magento setup:upgrade
 bin/magento setup:di:compile              # production mode
@@ -54,7 +54,7 @@ bin/magento setup:static-content:deploy   # production mode
 bin/magento cache:flush</pre>
 <h3>From the zip</h3>
 <pre>mkdir -p app/code/IntentsFi/Checkout
-unzip intentsfi-magento2-1.0.3.zip -d app/code/IntentsFi/Checkout
+unzip intentsfi-magento2-1.1.0.zip -d app/code/IntentsFi/Checkout
 bin/magento module:enable IntentsFi_Checkout
 bin/magento setup:upgrade</pre>
 <p>Then compile, deploy static content and flush the cache as above. <code>setup:upgrade</code> creates one table, <code>intentsfi_checkout_webhook_event</code>, which remembers the payment notifications already applied.</p>
@@ -77,6 +77,14 @@ bin/magento setup:upgrade</pre>
   <li>Copy the <strong>Webhook URL</strong> shown, add it on the dashboard's <strong>Webhooks</strong> page for the same key with the <code>invoice.*</code> events, and paste the <code>whsec_…</code> secret it shows into <strong>Webhook secret</strong>.</li>
   <li><strong>Save Config</strong>, then press <strong>Test connection</strong>: it shows the business, the mode and the wallet the key settles to.</li>
 </ol>
+
+<h3>Affiliate ID (optional)</h3>
+<p>If an agency or developer set up your checkout, they may give you their Intents affiliate ID. Paste it into <strong>Affiliate ID (optional)</strong>, below the keys, and press <strong>Save Config</strong> before you press <strong>Connect to Intents</strong>. It doesn't change your fee, and it only applies before your store's first live payment.</p>
+<ul>
+  <li>An affiliate ID is 6 to 16 lowercase letters, digits or hyphens. Capitals are lowercased on save; anything else is refused and the previous value is kept. Clear the field to remove it.</li>
+  <li>On save, the page says <em>Linked to</em> and the affiliate's name, or warns that the ID is unknown or couldn't be checked right now. The ID is saved either way.</li>
+  <li>Once Intents links your account to the affiliate, <strong>Test connection</strong> also says <em>Referred by</em> and their name.</li>
+</ul>
 
 <h2>4. Place a test order</h2>
 <p>Add a product to the cart and go to checkout. <strong>Pay with crypto</strong> shows the amount first; <strong>Continue to payment</strong> places the order at <em>Pending Payment</em> and sends the customer to the payment page.</p>
@@ -114,6 +122,7 @@ bin/magento setup:upgrade</pre>
   <tr><td>API key, Webhook secret</td><td>filled by Connect, or entered manually; stored encrypted, never exported by <code>app:config:dump</code>, never logged</td></tr>
   <tr><td>Webhook URL</td><td>read-only: <code>https://&lt;store&gt;/intentsfi/webhook</code></td></tr>
   <tr><td>Test connection</td><td>checks the saved key; save first</td></tr>
+  <tr><td>Affiliate ID (optional)</td><td>the ID an agency or developer gave you; sent with Connect and when a payment is created, and checked with Intents (only the ID is sent) when you save it</td></tr>
   <tr><td>Applicable countries, Sort order</td><td>standard Magento payment settings</td></tr>
 </table>
 

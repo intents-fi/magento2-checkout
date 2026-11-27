@@ -25,7 +25,7 @@ use Magento\Store\Model\StoreManagerInterface;
 class Config
 {
     public const METHOD_CODE = 'intentsfi_checkout';
-    public const VERSION = '1.0.3';
+    public const VERSION = '1.1.0';
     public const SUPPORT_EMAIL = 'support@intents.fi';
 
     private const PREFIX = 'payment/' . self::METHOD_CODE . '/';
@@ -50,6 +50,24 @@ class Config
     public function webhookSecret(?int $storeId = null): string
     {
         return $this->secret('webhook_secret', ScopeInterface::SCOPE_STORE, $storeId);
+    }
+
+    /**
+     * The affiliate ID for invoices of this store's website ({@see Affiliate}), or `''` when none
+     * is set or the saved value is not a valid ID.
+     */
+    public function affiliateId(?int $storeId = null): string
+    {
+        return Affiliate::usable($this->secret(Affiliate::FIELD, ScopeInterface::SCOPE_STORE, $storeId));
+    }
+
+    /** The affiliate ID at a website scope, or the default scope when `$websiteId` is null. */
+    public function affiliateIdForWebsite(?int $websiteId): string
+    {
+        $value = $websiteId === null
+            ? $this->secret(Affiliate::FIELD, ScopeConfigInterface::SCOPE_TYPE_DEFAULT, null)
+            : $this->secret(Affiliate::FIELD, ScopeInterface::SCOPE_WEBSITE, $websiteId);
+        return Affiliate::usable($value);
     }
 
     /** `test` or `live` from the key's prefix; null when the saved key is not a secret key. */
